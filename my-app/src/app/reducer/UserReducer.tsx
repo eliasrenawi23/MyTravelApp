@@ -9,7 +9,8 @@ export interface UserInfo {
   userInfo: {
     Email: string;
     Fname: string;
-    Lname: string
+    Lname: string;
+    Password:string;
     ProfileImg :string;
   }
   Islogin: boolean;
@@ -22,6 +23,7 @@ const initialState: UserInfo = {
     Email: "",
     Fname: "",
     Lname: "",
+    Password:"",
     ProfileImg: "../../../icons/travel_app_person_purple1.png",
   },
   Islogin: false,
