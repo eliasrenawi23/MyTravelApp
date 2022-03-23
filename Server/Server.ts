@@ -6,6 +6,8 @@ const nodemailer = require("nodemailer");
 const http = require('http');
 const cors = require('cors');
 const server = http.createServer(app);
+const{OAuth2Client} =require('google-auth-library');
+
 
 app.use(express.json());
 app.use(cors())
@@ -26,8 +28,8 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-// const userRouter = require('./routers/userRouter');
-// app.use('/users', userRouter);
+ const userRouter = require('./routers/userRouter');
+ app.use('/users', userRouter);
 
 app.listen(port, () => {
     return console.log(`Listening on port ${port} !`);
