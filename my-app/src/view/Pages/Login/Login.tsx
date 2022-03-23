@@ -1,9 +1,10 @@
 //import { useState } from 'react';
 import { useEffect, useState } from 'react';
 import GoogleLogin from 'react-google-login';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { changeNavText } from '../../../app/reducer/NavTextReducer';
-import { login, GetUser, getUserInfoAsync } from '../../../app/reducer/UserReducer';
+import { GetUser, getUserInfoAsync, loginAsync } from '../../../app/reducer/UserReducer';
 import './Login.scss';
 
 //import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -16,28 +17,41 @@ interface Userinfo {
 }
 
 function Login(props: any) {
+    const [Email, setEmail] = useState("");
+    const [Password, setPassword] = useState("");
+    const user = useAppSelector(GetUser);
+    const dispatch = useAppDispatch();
+    const nav = useNavigate();
+    const { state }: any = useLocation();
     var googleid: string
     if (process.env.REACT_APP_GOOGLE_CLIENT_ID) {
         googleid = process.env.REACT_APP_GOOGLE_CLIENT_ID
     } else {
         throw new Error("REACT_APP_GOOGLE_CLIENT_ID environment variable is not set")
-
-
     }
     const [loginData, setloginData] = useState(
         localStorage.getItem('loginData') ? JSON.parse(localStorage.getItem('loginData')) : null
     );
-    const [Email, setEmail] = useState("");
-    const [Password, setPassword] = useState("");
-    // const user_name:string = username;
 
-    const user = useAppSelector(GetUser);
-
-    const dispatch = useAppDispatch();
-
+    console.log(user);
     useEffect(() => {
         dispatch(changeNavText("Sign up to save List"));
-    }, [dispatch]);
+
+        if (user.Islogin == true) {
+            nav('/', {
+                state: state
+            });
+        }
+        if (user.status === 'failed') {
+            alert("Worng Password or Email try again.");
+            user.status = 'idle';
+        }
+
+
+
+    }, [dispatch, user]);
+
+
     function SignUpHandel(e: any) {
         console.log("signup pressed");
         // dispatch(login({
@@ -57,6 +71,9 @@ function Login(props: any) {
         //     //GetUserName()
         // },[]);
         dispatch(getUserInfoAsync());
+        if (Email === "" || Password === "") {
+            alert("The username or email field is empty.");
+        }
 
 
     }
@@ -64,16 +81,14 @@ function Login(props: any) {
         alert(reasult);
 
     }
-    const handleLogin = async (googledate: any) => {
-
-        dispatch(login({
+    const handleLogin = (googledate: any) => {
+        if (Email === "" || Password === "") {
+            alert("The username or email field is empty.");
+        }
+        dispatch(loginAsync({
             Email: Email,
-            Fname: "",
-            Lname: "",
             Password: Password
         }));
-
-        console.log(googledate);
     }
     const handlelogout = (googledate: any) => {
         localStorage.removeItem('loginData');

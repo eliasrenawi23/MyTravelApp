@@ -33,11 +33,30 @@ const initialState: UserInfo = {
 export const getUserInfoAsync = createAsyncThunk(
   'user/GetUserInfo',
   async (_, thunkAPI) => {
+
+
     try {
      // const response = await axios.get('http://localhost:3004/Users/1')
       const response = await axios.get('http://localhost:3001/users')
       const data: any = response.data
       console.log("data from server 3001");
+      console.log(data);
+      return data
+    } catch (error: any) {
+      thunkAPI.rejectWithValue(error.response.data)
+    }
+
+  }
+);
+export const loginAsync = createAsyncThunk(
+  'user/login',
+  async (loginInfo:any, thunkAPI) => {
+    const{ Email,Password} =loginInfo;
+      //to do encrept logindata
+    try {
+      const response = await axios.post('http://localhost:3001/users/login',{Email: Email, Password: Password})
+      const data: any = response.data
+      console.log("login data  from server 3001");
       console.log(data);
       return data
     } catch (error: any) {
@@ -52,9 +71,10 @@ export const UserSlice = createSlice({
   name: 'User',
   initialState,
   reducers: {
-    login :(state,action)=>{
-      state.userInfo = action.payload;
-    },
+    // login :(state,action)=>{
+    //   state.userInfo = action.payload;
+      
+    // },
     logout:(state,action)=>{
       state=initialState;
     }
@@ -76,7 +96,7 @@ export const UserSlice = createSlice({
 });
 
 
-export const{login} =UserSlice.actions;
+// export const{login} =UserSlice.actions;
 export const{logout} =UserSlice.actions;
 //export const{getUserInfoAsync} =UserSlice.caseReducers;
 
