@@ -7,7 +7,6 @@ const http = require('http');
 const cors = require('cors');
 const server = http.createServer(app);
 
-///sadasd
 app.use(express.json());
 app.use(cors())
 require('dotenv').config();
@@ -32,6 +31,9 @@ app.get('/', (req, res) => {
  const userRouter = require('./routers/userRouter');
  app.use('/users', userRouter);
 
+ app.get('/*', (req, res) => {
+    res.sendFile(__dirname+'../my-app/build.index.html');
+});
 app.listen(port, () => {
     return console.log(`Listening on port ${port}!`);
 });
