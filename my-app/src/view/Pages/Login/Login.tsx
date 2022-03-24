@@ -70,10 +70,14 @@ function Login(props: any) {
         // useEffect(()=>{
         //     //GetUserName()
         // },[]);
-        dispatch(getUserInfoAsync());
+        //dispatch(getUserInfoAsync());
         if (Email === "" || Password === "") {
             alert("The username or email field is empty.");
         }
+        dispatch(loginAsync({
+            Email: Email,
+            Password: Password
+        }));
 
 
     }
@@ -82,12 +86,14 @@ function Login(props: any) {
 
     }
     const handleLogin = (googledate: any) => {
-        if (Email === "" || Password === "") {
-            alert("The username or email field is empty.");
-        }
+        // if (Email === "" || Password === "") {
+        //     alert("The username or email field is empty.");
+        // }
+        console.log(googledate.profileObj)
         dispatch(loginAsync({
-            Email: Email,
-            Password: Password
+            Email: googledate.profileObj.email,
+         //   Password: Password
+            Password: ""
         }));
     }
     const handlelogout = (googledate: any) => {

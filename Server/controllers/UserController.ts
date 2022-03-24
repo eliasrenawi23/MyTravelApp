@@ -8,12 +8,15 @@ const client =new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 exports.login = async (req, res) => {
   console.log("login");
 
-  const {token}=req.body;
-  const ticket =await client.verifyIdToken({
-    idToken:token,
-    audience:process.env.CLIENT_ID,
-  });
-  const{name,email,picture}=ticket.getPayload();
+  console.log(req.body);
+  // const {token}=req.body;
+  // const ticket =await client.verifyIdToken({
+  //   idToken:token,
+  //   audience:process.env.CLIENT_ID,
+  // });
+  // const{name,email,picture}=ticket.getPayload();
+  // console.log(ticket.getPayload());
+
   try {
     const _user = await user.find({});
     res.send({ ok: true, user: _user });
