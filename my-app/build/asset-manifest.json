@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.3cca91fb.css",
+    "main.js": "/static/js/main.9ae96588.js",
+    "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
+    "static/media/globe_croped.gif": "/static/media/globe_croped.6f332218a448b2d0dd9c.gif",
+    "static/media/compass.ico": "/static/media/compass.7b6ecf33261d48847eb7.ico",
+    "static/media/travel_app_person_purple1.png": "/static/media/travel_app_person_purple1.c290adbf1c8226de0305.png",
+    "index.html": "/index.html",
+    "main.3cca91fb.css.map": "/static/css/main.3cca91fb.css.map",
+    "main.9ae96588.js.map": "/static/js/main.9ae96588.js.map",
+    "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3cca91fb.css",
+    "static/js/main.9ae96588.js"
+  ]
+}

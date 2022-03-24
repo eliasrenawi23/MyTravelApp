@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors())
 require('dotenv').config();
 
-app.use(express.static("./client/build")); ///to do
+app.use(express.static("../my-app/build"));
 
 mongoose.connect(`mongodb+srv://eliasrenawi:${process.env.MONGODB_PASSWORD}@cluster0.yp2sn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
