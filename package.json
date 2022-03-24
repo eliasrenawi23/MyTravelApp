@@ -2,7 +2,7 @@
   "name": "mytravelapp",
   "version": "1.0.0",
   "description": "MyTravelApp is a Travel app",
-  "main": "index.js",
+  "main": "Server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd Server && npm i && ts-node Server.ts"

@@ -10,8 +10,9 @@ export interface UserInfo {
     Email: string;
     Fname: string;
     Lname: string;
-    Password:string;
-    ProfileImg :string;
+    Password: string;
+    ProfileImg: string;
+    Id: string;
   }
   Islogin: boolean;
   status: 'idle' | 'loading' | 'failed';
@@ -23,8 +24,9 @@ const initialState: UserInfo = {
     Email: "",
     Fname: "",
     Lname: "",
-    Password:"",
+    Password: "",
     ProfileImg: "../../../icons/travel_app_person_purple1.png",
+    Id: ""
   },
   Islogin: false,
   status: 'idle'
@@ -33,10 +35,8 @@ const initialState: UserInfo = {
 export const getUserInfoAsync = createAsyncThunk(
   'user/GetUserInfo',
   async (_, thunkAPI) => {
-
-
     try {
-     // const response = await axios.get('http://localhost:3004/Users/1')
+      // const response = await axios.get('http://localhost:3004/Users/1')
       const response = await axios.get('http://localhost:3001/users')
       const data: any = response.data
       console.log("data from server 3001");
@@ -50,11 +50,11 @@ export const getUserInfoAsync = createAsyncThunk(
 );
 export const loginAsync = createAsyncThunk(
   'user/login',
-  async (loginInfo:any, thunkAPI) => {
-    const{ Email,Password} =loginInfo;
-      //to do encrept logindata
+  async (loginInfo: any, thunkAPI) => {
+    // const{ Email,Password} =loginInfo;
+    //to do encrept logindata
     try {
-      const response = await axios.post('http://localhost:3001/users/login',{Email: Email, Password: Password})
+      const response = await axios.post('http://localhost:3001/users/login', loginInfo)
       const data: any = response.data
       console.log("login data  from server 3001");
       console.log(data);
@@ -73,10 +73,10 @@ export const UserSlice = createSlice({
   reducers: {
     // login :(state,action)=>{
     //   state.userInfo = action.payload;
-      
+
     // },
-    logout:(state,action)=>{
-      state=initialState;
+    logout: (state, action) => {
+      state = initialState;
     }
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -89,15 +89,32 @@ export const UserSlice = createSlice({
       .addCase(getUserInfoAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.userInfo = action.payload;
-        state.Islogin=true;
+        state.Islogin = true;
+      })
 
-      });
+
+      .addCase(loginAsync.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(loginAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        if (action.payload.ok == true) {
+          state.userInfo = action.payload;
+          state.Islogin = true;
+        }
+        else {
+          state = initialState;
+        }
+      })
   },
+
+
+
 });
 
 
 // export const{login} =UserSlice.actions;
-export const{logout} =UserSlice.actions;
+export const { logout } = UserSlice.actions;
 //export const{getUserInfoAsync} =UserSlice.caseReducers;
 
 export const GetUser = (state: RootState) => state.User;

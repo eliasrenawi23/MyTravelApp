@@ -1,11 +1,13 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT ||3001;
+const port = process.env.PORT || 3001;
 const mongoose = require('mongoose');
 const nodemailer = require("nodemailer");
 const http = require('http');
 const cors = require('cors');
 const server = http.createServer(app);
+import user from "./model/userModel";
+
 
 app.use(express.json());
 app.use(cors())
@@ -17,6 +19,7 @@ mongoose.connect(`mongodb+srv://eliasrenawi:${process.env.MONGODB_PASSWORD}@clus
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
+
 const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "connection error:"));
@@ -28,11 +31,11 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
- const userRouter = require('./routers/userRouter');
- app.use('/users', userRouter);
+const userRouter = require('./routers/userRouter');
+app.use('/users', userRouter);
 
- app.get('/*', (req, res) => {
-    res.sendFile(__dirname+'../my-app/build.index.html');
+app.get('/*', (req, res) => {
+    res.sendFile(__dirname + '../my-app/build.index.html');
 });
 app.listen(port, () => {
     return console.log(`Listening on port ${port}!`);

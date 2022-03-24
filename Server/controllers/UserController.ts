@@ -1,13 +1,13 @@
 
-import user from "../model/userModel";
+import User from "../model/userModel";
 var fs = require("fs");
-const{OAuth2Client} =require('google-auth-library');
-const client =new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
+
 
 
 exports.login = async (req, res) => {
   console.log("login");
-
   console.log(req.body);
   // const {token}=req.body;
   // const ticket =await client.verifyIdToken({
@@ -16,49 +16,41 @@ exports.login = async (req, res) => {
   // });
   // const{name,email,picture}=ticket.getPayload();
   // console.log(ticket.getPayload());
+  const { Email, Lname, Fname, Password, Id, ProfileImg } = req.body;
+  var newId: string;
 
   try {
-    const _user = await user.find({});
-    res.send({ ok: true, user: _user });
+    const _user = await User.findOne({ Email: Email });
+    console.log(_user);
+    if (_user === null && Password === '') {//if google user just add it 
+      if (Id === '')
+        newId = Math.floor(Math.random() * 1000000000000000000000).toString();
+      else {
+        newId = Id.toString();
+      }
+      console.log(newId);
+      const _user = new User({
+        Email: Email,
+        FisrtName: Fname,
+        LastName: Lname,
+        imageUrl: ProfileImg,
+        Id: newId,
+        password: ""
+      })
+      _user.save().then("Users saved!");
+    }
+    else {   //if not google user check the password
+      if (_user === null) {
+        res.send({ ok: false, Users: null }); //the user is not database 
+      }
+      else if (_user.password === Password) {  ///to be contenuo
+        res.send({ ok: true, Users: _user });
+      }
+      else {
+        res.send({ ok: false, Users: null }); //the user in data bas but wrong password
+      }
+    }
   } catch (error: any) {
     res.send({ ok: false, error: error.message });
   }
 };
-
-// exports.addNewAccident = async (req, res) => {
-//   console.log("addNewAccident 1");
-//   const {
-//     type,
-//     emergency,
-//     date,
-//     address,
-//     media,
-//     call,
-//     description,
-//     user,
-//     org,
-//   } = req.body;
-
-//   try {
-
-//     const _acc = await new Accident({
-
-//       type: type,
-//       emergency: emergency,
-//       date: date,
-//       address: address,
-//       description: description,
-//       media: media,
-//       user: user,
-//       org: org,
-//     });
-//     _acc.save().then("accident saved!");
-//     res.send({accident:_acc})
-
-//     // const _acc = await Accident.findOne({ });
-//   } catch (error: any) {
-//     console.log("error 2");
-//     console.log(error);
-//     res.send({ ok: false, error: error.message });
-//   }
-// };

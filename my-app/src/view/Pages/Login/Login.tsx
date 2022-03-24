@@ -52,48 +52,35 @@ function Login(props: any) {
     }, [dispatch, user]);
 
 
-    function SignUpHandel(e: any) {
-        console.log("signup pressed");
-        // dispatch(login({
-        //     userInfo: {
-        //         Email: "Elias",
-        //         Fname: "Elias",
-        //         Lname: "elias"
-        //     },
-        //         Islogin: "True",
-        //     status: 'loading'
-
-        // }));
-        // console.log(user.userInfo);
-
-
-        // useEffect(()=>{
-        //     //GetUserName()
-        // },[]);
-        //dispatch(getUserInfoAsync());
+    function loginhandle(e: any) {
+        console.log("login pressed");
+       
         if (Email === "" || Password === "") {
             alert("The username or email field is empty.");
         }
+
+
+        console.log("Email : "+Email+"+" +"Password :"+Password)
         dispatch(loginAsync({
             Email: Email,
             Password: Password
         }));
-
 
     }
     const handleFailure = (reasult: String) => {
         alert(reasult);
 
     }
-    const handleLogin = (googledate: any) => {
-        // if (Email === "" || Password === "") {
-        //     alert("The username or email field is empty.");
-        // }
-        console.log(googledate.profileObj)
+    const handleLoginWithgoogle = (googledate: any) => {
+       
+        console.log(googledate)
         dispatch(loginAsync({
             Email: googledate.profileObj.email,
-         //   Password: Password
-            Password: ""
+            Fname: googledate.profileObj.givenName,
+            Lname: googledate.profileObj.familyName,
+            ProfileImg: googledate.profileObj.imageUrl,
+            Id: googledate.profileObj.googleId,
+            Password: ''
         }));
     }
     const handlelogout = (googledate: any) => {
@@ -115,7 +102,7 @@ function Login(props: any) {
                     <GoogleLogin
                         clientId={googleid}
                         buttonText='Log in with Google'
-                        onSuccess={handleLogin}
+                        onSuccess={handleLoginWithgoogle}
                         onFailure={handleFailure}
                         cookiePolicy={'single_host_origin'}>
                     </GoogleLogin>
@@ -126,11 +113,11 @@ function Login(props: any) {
                         <input type="password" className='inputs password' placeholder='Password' onChange={(e: any) => setPassword(e.target.value)} />
 
                     </form>
-                    <button className='loginbtn' onClick={SignUpHandel}>login</button>
+                    <button className='loginbtn' onClick={loginhandle}>login</button>
 
                     <div className="signupop">
                         <h3>dont have acount ? </h3>
-                        <button className='SignUpbtn' onClick={SignUpHandel}>Sign Up</button></div>
+                        <button className='SignUpbtn'>Sign Up</button></div>
 
                 </div>
             </div>

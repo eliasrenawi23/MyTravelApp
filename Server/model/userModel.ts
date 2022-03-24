@@ -9,7 +9,5 @@ export const UserSchema = new mongoose.Schema({
     imageUrl:String,
     password: String,
 })
-
-const Users = mongoose.model("Users.googleUsers", UserSchema);
-
-export default Users
+const User = mongoose.model("users", UserSchema);
+export default User;
