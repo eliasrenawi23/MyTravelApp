@@ -40,7 +40,7 @@ exports.login = async (req, res) => {
         password: ""
       })
       _user.save().then("Users saved!");
-      res.cookie("userLogin",{id:_user.Id});
+      res.cookie("userLogin", { id: _user.Id });
       res.status(200).send({ ok: true, Users: _user });
     }
     else {   //if not google user check the password
@@ -49,12 +49,12 @@ exports.login = async (req, res) => {
       }
       else if (_user.password === Password) {  ///to be contenuo
         //res.cookie('mycookies',_user,{ maxAge: 900000, httpOnly: true })
-        res.cookie("userLogin",{id:_user.Id});
-       // console.log("cookie :", res.cookie("userLogin",{id:_user.Id},{ path: '/login' }));
+        res.cookie("userLogin", { id: _user.Id });
+        // console.log("cookie :", res.cookie("userLogin",{id:_user.Id},{ path: '/login' }));
         res.status(200).send({ ok: true, Users: _user });
       }
       else {
-        res.status(304).send({ ok: false}); //the user in data bas but wrong password
+        res.status(304).send({ ok: false }); //the user in data bas but wrong password
       }
     }
   } catch (error: any) {
@@ -63,10 +63,45 @@ exports.login = async (req, res) => {
 };
 exports.logout = async (req, res) => {
   console.log("logout");
-    res.clearCookie('userLogin');
-    res.status(204).send({ ok: true})
+  res.clearCookie('userLogin');
+  res.status(204).send({ ok: true })
+};
 
 
+
+exports.Signup = async (req, res) => {
+  console.log("Signup");
+  console.log(req.body);
+  // const {token}=req.body;
+  // const ticket =await client.verifyIdToken({
+  //   idToken:token,
+  //   audience:process.env.CLIENT_ID,
+  // });
+  // const{name,email,picture}=ticket.getPayload();
+  // console.log(ticket.getPayload());
+  const { Email, Lname, Fname, Password, Id, ProfileImg } = req.body;
+  var newId: string;
+
+  try {
+    const _user = await User.findOne({ Email: Email });
+    if (_user != null) res.status(400).send({ ok: false, error: "user already in database" });
+    else {
+      var newId: string = Math.floor(Math.random() * 1000000000000000000000).toString();
+      const _user = new User({
+        Email: Email,
+        FisrtName: Fname,
+        LastName: Lname,
+        imageUrl: ProfileImg,
+        Id: newId,
+        password: Password
+      })
+      _user.save().then("Users saved!");
+      res.cookie("userLogin", { id: _user.Id });
+      res.status(200).send({ ok: true, Users: _user });
+    }
+  } catch (error: any) {
+    res.status(400).send({ ok: false, error: error.message });
+  }
 };
 // to do
 

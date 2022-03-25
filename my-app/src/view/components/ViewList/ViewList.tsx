@@ -59,7 +59,7 @@ function ViewList() {
 
     function clickSignup(e: any) {
         setShowResults(true);
-        nav('/Signup', {
+        nav('/Login', {
             state: state
         });
 

@@ -18,6 +18,7 @@ import Test from './view/Pages/TravelInfo1/Test';
 import Preparing from './view/components/Preparing/Preparing';
 import SummeryPage from './view/Pages/SummeryPage/SummeryPage';
 import SummeryComp from './view/components/SummeryComp/SummeryComp';
+import SignUp from './view/Pages/SignUp/SignUp';
 
 
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/TravelInfo1" element={< TravelInfo1/>} />
         <Route path="/TravelInfo2" element={< TravelInfo2/>} />
+        <Route path="/SignUp" element={<SignUp />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/ViewList" element={<ViewList />} />
         <Route path="/Preparing" element={<Preparing />} />

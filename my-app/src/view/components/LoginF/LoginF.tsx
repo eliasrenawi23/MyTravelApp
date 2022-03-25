@@ -1,12 +1,12 @@
 
-import './SingupF.scss';
+import './LoginF.scss';
 import SignupIcon from '../../../icons/SignupIcon.png'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../app/hooks';
 import { GetUser } from '../../../app/reducer/UserReducer';
 
 
-const SingupF = () => {
+const LoginF = () => {
 
     const nav = useNavigate();
     const { state }: any = useLocation();
@@ -14,7 +14,7 @@ const SingupF = () => {
     console.log(user);
     // const dispatch = useAppDispatch();
     function gotoSignup(e: any) {
-        nav('/Signup', {
+        nav('/login', {
             state: state
         });
     }
@@ -32,4 +32,4 @@ const SingupF = () => {
     }
 }
 
-export default SingupF;
+export default LoginF;

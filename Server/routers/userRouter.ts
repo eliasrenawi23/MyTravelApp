@@ -9,9 +9,8 @@ router.
 router.
     route('/logout').
     post(UserController.logout);
-
-// router.
-//     route('/Signup').
-//     post(UserController);
+router.
+    route('/Signup').
+    post(UserController.Signup);
 
 module.exports = router;

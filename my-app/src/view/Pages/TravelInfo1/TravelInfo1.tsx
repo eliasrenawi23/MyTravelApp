@@ -5,7 +5,7 @@ import { changeNavText } from '../../../app/reducer/NavTextReducer';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { useEffect } from 'react';
 import InputComp from '../../components/InputComp/InputComp';
-import SingupF from '../../components/SignupF/SingupF';
+import SingupF from '../../components/LoginF/LoginF';
 
 
 

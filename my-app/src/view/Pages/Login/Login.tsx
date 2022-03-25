@@ -1,10 +1,11 @@
 //import { useState } from 'react';
 import { useEffect, useState } from 'react';
 import GoogleLogin from 'react-google-login';
+import Link from '@mui/material/Link';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { changeNavText } from '../../../app/reducer/NavTextReducer';
-import { GetUser, getUserInfoAsync, loginAsync } from '../../../app/reducer/UserReducer';
+import { GetUser,loginAsync } from '../../../app/reducer/UserReducer';
 import './Login.scss';
 import 'react-cookie';
 
@@ -55,13 +56,13 @@ function Login(props: any) {
 
     function loginhandle(e: any) {
         console.log("login pressed");
-       
+
         if (Email === "" || Password === "") {
             alert("The username or email field is empty.");
         }
 
 
-        console.log("Email : "+Email+"+" +"Password :"+Password)
+        console.log("Email : " + Email + "+" + "Password :" + Password)
         dispatch(loginAsync({
             Email: Email,
             Password: Password
@@ -73,7 +74,7 @@ function Login(props: any) {
 
     }
     const handleLoginWithgoogle = (googledate: any) => {
-       
+
         console.log(googledate)
         dispatch(loginAsync({
             Email: googledate.profileObj.email,
@@ -118,7 +119,10 @@ function Login(props: any) {
 
                     <div className="signupop">
                         <h3>dont have acount ? </h3>
-                        <button className='SignUpbtn'>Sign Up</button></div>
+                        <Link href="/signup" variant="body2">
+                            <button className='SignUpbtn'> Sign Up</button>
+                        </Link>
+                    </div>
 
                 </div>
             </div>

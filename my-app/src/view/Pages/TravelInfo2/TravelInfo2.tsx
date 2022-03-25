@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../app/hooks';
 import { changeNavText } from '../../../app/reducer/NavTextReducer';
 import InputComp from '../../components/InputComp/InputComp';
-import SingupF from '../../components/SignupF/SingupF';
+import SingupF from '../../components/LoginF/LoginF';
 
 
 

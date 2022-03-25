@@ -9,7 +9,7 @@ const InputComp = (props: list) => {
     return (
         <div>
             <input id={propsname} type="checkbox" />
-            <label className={propsname} htmlFor={propsname}></label>
+            <label className={"InputComplabel "+propsname} htmlFor={propsname}></label>
         </div>
 
     );
