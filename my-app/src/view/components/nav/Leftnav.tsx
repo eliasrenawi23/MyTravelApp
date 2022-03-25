@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { GetUser, logout } from '../../../app/reducer/UserReducer';
+import { GetUser, logoutAsync } from '../../../app/reducer/UserReducer';
 import ETIcon from '../../../icons/travel_app_person_purple1.png';
 import './Leftnav.scss';
 
@@ -28,9 +28,8 @@ const Leftnav = (props: openClose) => {
 
 
     if (LoggedOut == true) {
-      dispatch(logout({}));
+     // dispatch(logoutAsync({}));
       setName("Edit Profile");
-
     }
 
 
@@ -38,7 +37,10 @@ const Leftnav = (props: openClose) => {
 
 
   function signoutfunc(e: any) {
+
+
     setLoggedOut(user.Islogin);
+    dispatch(logoutAsync({}));
     console.log(LoggedOut);
     console.log(user.Islogin);
   }

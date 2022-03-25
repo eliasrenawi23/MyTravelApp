@@ -41,11 +41,11 @@ exports.login = async (req, res) => {
       })
       _user.save().then("Users saved!");
       res.cookie("userLogin",{id:_user.Id});
-      res.send({ ok: true, Users: _user });
+      res.status(200).send({ ok: true, Users: _user });
     }
     else {   //if not google user check the password
       if (_user === null) {
-        res.send({ ok: false, Users: null }); //the user is not database 
+        res.status(304).send({ ok: false }); //the user is not database 
       }
       else if (_user.password === Password) {  ///to be contenuo
         //res.cookie('mycookies',_user,{ maxAge: 900000, httpOnly: true })
@@ -54,10 +54,35 @@ exports.login = async (req, res) => {
         res.status(200).send({ ok: true, Users: _user });
       }
       else {
-        res.send({ ok: false, Users: null }); //the user in data bas but wrong password
+        res.status(304).send({ ok: false}); //the user in data bas but wrong password
       }
     }
   } catch (error: any) {
-    res.send({ ok: false, error: error.message });
+    res.status(400).send({ ok: false, error: error.message });
   }
 };
+exports.logout = async (req, res) => {
+  console.log("logout");
+    res.clearCookie('userLogin');
+    res.status(204).send({ ok: true})
+
+
+};
+// to do
+
+// router.get('/get-user-recipes', async (req, res) => {
+//   try {
+//       const {userLogIn} = req.cookies;
+//       const {id} = userLogIn;
+//       const user = await User.findOne({_id: id})
+//       if(user){
+//           const recipes = await userRecipes.find({});
+//           res.send({ok:true, recipes: recipes});
+//       }
+//       else{
+//           res.send({ok: false});
+//       }
+//   } catch (error: any) {
+//       res.send({ ok:false, error: error.message });
+//   }
+// })

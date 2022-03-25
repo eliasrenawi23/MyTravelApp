@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { changeNavText } from '../../../app/reducer/NavTextReducer';
 import { GetUser, getUserInfoAsync, loginAsync } from '../../../app/reducer/UserReducer';
 import './Login.scss';
+import 'react-cookie';
 
 //import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -37,11 +38,11 @@ function Login(props: any) {
     useEffect(() => {
         dispatch(changeNavText("Sign up to save List"));
 
-        // if (user.Islogin == true) {
-        //     nav('/', {
-        //         state: state
-        //     });
-        // }
+        if (user.Islogin == true) {
+            nav('/', {
+                state: state
+            });
+        }
         if (user.status === 'failed') {
             alert("Worng Password or Email try again.");
             user.status = 'idle';
