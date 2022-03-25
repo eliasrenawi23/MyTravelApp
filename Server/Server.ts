@@ -1,18 +1,25 @@
 const express = require('express');
-const app = express();
-const port = process.env.PORT || 3001;
+const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose');
 const nodemailer = require("nodemailer");
 const http = require('http');
 const cors = require('cors');
+
+const app = express();
 const server = http.createServer(app);
-import user from "./model/userModel";
+const port = process.env.PORT || 3001;
 
 
+const corsOptions = {
+    origin: true, //included origin as true
+    credentials: true, //included credentials as true
+    exposedHeaders: ["set-cookie"],
+
+};
+app.use(cookieParser());
 app.use(express.json());
-app.use(cors())
+app.use(cors(corsOptions))
 require('dotenv').config();
-
 app.use(express.static("../my-app/build"));
 
 mongoose.connect(`mongodb+srv://eliasrenawi:${process.env.MONGODB_PASSWORD}@cluster0.yp2sn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {

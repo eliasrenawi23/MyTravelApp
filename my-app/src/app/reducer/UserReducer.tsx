@@ -53,8 +53,8 @@ export const loginAsync = createAsyncThunk(
   async (loginInfo: any, thunkAPI) => {
     // const{ Email,Password} =loginInfo;
     //to do encrept logindata
-    try {
-      const response = await axios.post('http://localhost:3001/users/login', loginInfo)
+    try { //{ withCredentials: true }
+      const response = await axios.post('http://localhost:3001/users/login', loginInfo,{ withCredentials: true })
       const data: any = response.data
       console.log("login data  from server 3001");
       console.log(data);
