@@ -19,6 +19,7 @@ interface Userinfo {
 }
 
 function Login(props: any) {
+
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const user = useAppSelector(GetUser);
@@ -46,7 +47,6 @@ function Login(props: any) {
         }
         if (user.status === 'failed') {
             alert("Worng Password or Email try again.");
-            user.status = 'idle';
         }
 
 

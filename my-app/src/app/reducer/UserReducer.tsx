@@ -36,15 +36,18 @@ export const loginAsync = createAsyncThunk(
   async (loginInfo: any, thunkAPI) => {
     // const{ Email,Password} =loginInfo;
     //to do encrept logindata
+
     try {
       const response = await axios.post('http://localhost:3001/users/login', loginInfo, { withCredentials: true })
       const data: any = response.data
       console.log("login data  from server 3001");
       console.log(data);
-      if (data.ok)
-        return data;
-      else return thunkAPI.rejectWithValue("failed")
+      if (!data.ok)
+        return thunkAPI.rejectWithValue("failed");
+      else return data;
     } catch (error: any) {
+      //console.log(error);
+      //thunkAPI.rejectWithValue("failed");
       thunkAPI.rejectWithValue(error.response.data)
     }
 
@@ -112,17 +115,15 @@ export const UserSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(loginAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        if (action.payload.ok == true) {
+        if(action.payload!=undefined){
+          state.status = 'idle';
           state.userInfo = action.payload;
           state.Islogin = true;
-        }
-        else {
-          state = initialState;
         }
       })
       .addCase(loginAsync.rejected, (state, action) => {
         state.status = 'failed';
+        state = initialState;
       })
       //==================================================
       .addCase(logoutAsync.pending, (state) => {
@@ -141,13 +142,8 @@ export const UserSlice = createSlice({
       })
       .addCase(SignupAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        if (action.payload.ok == true) {
-          state.userInfo = action.payload;
-          state.Islogin = true;
-        }
-        else {
-          state = initialState;
-        }
+        state.userInfo = action.payload;
+        state.Islogin = true;
       })
       .addCase(SignupAsync.rejected, (state, action) => {
         state.status = 'failed';

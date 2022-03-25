@@ -1,15 +1,18 @@
 
 import User from "../model/userModel";
+import jwt from "jwt-simple";
 //const express = require("express");
 //var fs = require("fs");
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
+const JWT_SECRET = process.env.JWT_SECRET;
 
 
 
 exports.login = async (req, res) => {
   console.log("login");
   console.log(req.body);
+
   // const {token}=req.body;
   // const ticket =await client.verifyIdToken({
   //   idToken:token,
@@ -18,9 +21,7 @@ exports.login = async (req, res) => {
   // const{name,email,picture}=ticket.getPayload();
   // console.log(ticket.getPayload());
   const { Email, Lname, Fname, Password, Id, ProfileImg } = req.body;
-
   var newId: string;
-
   try {
     const _user = await User.findOne({ Email: Email });
     console.log(_user);
@@ -40,21 +41,26 @@ exports.login = async (req, res) => {
         password: ""
       })
       _user.save().then("Users saved!");
-      res.cookie("userLogin", { id: _user.Id });
+      const encodedJWT=jwt.encode({userId:newId},JWT_SECRET);
+      res.cookie("userLogin",encodedJWT);
       res.status(200).send({ ok: true, Users: _user });
     }
     else {   //if not google user check the password
       if (_user === null) {
-        res.status(304).send({ ok: false }); //the user is not database 
+        console.log("_user.password === Password ",_user," ",Password)
+        res.send({ ok: false , Users: null}); //the user is not database 
       }
       else if (_user.password === Password) {  ///to be contenuo
         //res.cookie('mycookies',_user,{ maxAge: 900000, httpOnly: true })
-        res.cookie("userLogin", { id: _user.Id });
+        const encodedJWT=jwt.encode({userId:newId,isLogedin:true},JWT_SECRET);
+        res.cookie("userLogin",encodedJWT);
         // console.log("cookie :", res.cookie("userLogin",{id:_user.Id},{ path: '/login' }));
         res.status(200).send({ ok: true, Users: _user });
       }
       else {
-        res.status(304).send({ ok: false }); //the user in data bas but wrong password
+        console.log("_user.password === Password ",_user.password ," ",Password)
+        res.send({ ok: false , Users: null}); //the user in data bas but wrong password
+
       }
     }
   } catch (error: any) {
@@ -72,13 +78,7 @@ exports.logout = async (req, res) => {
 exports.Signup = async (req, res) => {
   console.log("Signup");
   console.log(req.body);
-  // const {token}=req.body;
-  // const ticket =await client.verifyIdToken({
-  //   idToken:token,
-  //   audience:process.env.CLIENT_ID,
-  // });
-  // const{name,email,picture}=ticket.getPayload();
-  // console.log(ticket.getPayload());
+
   const { Email, Lname, Fname, Password, Id, ProfileImg } = req.body;
   var newId: string;
 
@@ -96,7 +96,9 @@ exports.Signup = async (req, res) => {
         password: Password
       })
       _user.save().then("Users saved!");
-      res.cookie("userLogin", { id: _user.Id });
+
+      const encodedJWT = jwt.encode({ userId: newId, isLogedin: true }, JWT_SECRET);
+      res.cookie("userLogin", encodedJWT);
       res.status(200).send({ ok: true, Users: _user });
     }
   } catch (error: any) {

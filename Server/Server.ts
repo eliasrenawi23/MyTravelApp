@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const nodemailer = require("nodemailer");
 const http = require('http');
 const cors = require('cors');
+const jwt = require('jwt-simple');
 
 const app = express();
 const server = http.createServer(app);

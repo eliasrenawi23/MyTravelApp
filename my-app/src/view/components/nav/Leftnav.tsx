@@ -12,8 +12,7 @@ interface openClose {
 
 const Leftnav = (props: openClose) => {
   const [userimgUrl, setuserimgUrl] = useState(ETIcon);
-  const [LoggedOut, setLoggedOut] = useState(false);
-  const [Name, setName] = useState("Edit Profile");
+  //const [Name, setName] = useState("Edit Profile");
 
   const { state }: any = useLocation();
 
@@ -23,25 +22,17 @@ const Leftnav = (props: openClose) => {
 
   const { Open } = props;
   useEffect(() => {
-    setName(user.userInfo.Fname + ' ' + user.userInfo.Lname);
-    console.log(Name);
+    // setName(user.userInfo.Fname + ' ' + user.userInfo.Lname);
+    // console.log(Name);
 
 
-    if (LoggedOut == true) {
-     // dispatch(logoutAsync({}));
-      setName("Edit Profile");
-    }
-
-
-  }, [user, LoggedOut])
+  }, [user])
 
 
   function signoutfunc(e: any) {
 
 
-    setLoggedOut(user.Islogin);
     dispatch(logoutAsync({}));
-    console.log(LoggedOut);
     console.log(user.Islogin);
   }
 
@@ -50,7 +41,7 @@ const Leftnav = (props: openClose) => {
     return (
       <ul className='Open' >
         <li><img src={userimgUrl} alt="Profile Pic" /></li>
-        <li>{Name}</li>
+        <li>Edit Profile</li>
         <li>Settings</li>
         <li><div className='signoutb' onClick={signoutfunc}>Sign Out</div></li>
         <li>Contact us</li>
@@ -62,7 +53,7 @@ const Leftnav = (props: openClose) => {
     return (
       <ul className='Closed'>
         <li><img src={userimgUrl} alt="Profile Pic" /></li>
-        <li>{Name}</li>
+        <li>Edit Profile</li>
         <li>Settings</li>
         <li>Sign Out</li>
         <li>Contact us</li>
