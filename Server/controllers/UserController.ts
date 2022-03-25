@@ -49,8 +49,8 @@ exports.login = async (req, res) => {
       }
       else if (_user.password === Password) {  ///to be contenuo
         //res.cookie('mycookies',_user,{ maxAge: 900000, httpOnly: true })
-        //res.cookie("userLogin",{id:_user.Id});
-        console.log("cookie :", res.cookie("userLogin",{id:_user.Id},{ path: '/login' }));
+        res.cookie("userLogin",{id:_user.Id});
+       // console.log("cookie :", res.cookie("userLogin",{id:_user.Id},{ path: '/login' }));
         res.status(200).send({ ok: true, Users: _user });
       }
       else {
