@@ -17,15 +17,16 @@ interface article {
 
 }
 
-const SummeryComp = (props:any) => {
+const SummeryComp = (props: any) => {
+   
 
-    const{title,description,urlToImage}=props.element;
+    const { title, description, urlToImage } = props.element;
     return (
-        <div className="SummeryCompHeader">
+        <div className="SummeryCompHeader" >
             <img src={urlToImage} alt="" />
             <div className="dSummeryCompName">{title}</div>
             <div className="SummeryCompDiscrepion">{description}</div>
- 
+
         </div>
     )
 }

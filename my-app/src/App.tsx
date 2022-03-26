@@ -17,8 +17,8 @@ import TravelInfo2 from './view/Pages/TravelInfo2/TravelInfo2';
 import Test from './view/Pages/TravelInfo1/Test';
 import Preparing from './view/components/Preparing/Preparing';
 import SummeryPage from './view/Pages/SummeryPage/SummeryPage';
-import SummeryComp from './view/components/SummeryComp/SummeryComp';
 import SignUp from './view/Pages/SignUp/SignUp';
+import Personal_compass from './view/Pages/Personal_compass/Personal_compass';
 
 
 
@@ -39,7 +39,7 @@ function App() {
         <Route path="/Preparing" element={<Preparing />} />
         <Route path="/Test" element={<Test />} />
         <Route path="/SummeryPage" element={<SummeryPage />} />
-        <Route path="/SummeryComp" element={<SummeryComp />} />
+        <Route path="/Personal_compass" element={<Personal_compass />} />
         
 
       </Routes>

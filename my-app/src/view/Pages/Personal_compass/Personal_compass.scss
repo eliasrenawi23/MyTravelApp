@@ -1,0 +1,27 @@
+.Personal_compassContainer {
+    width: 100vw;
+    height: 100%;
+    min-height : 100vh;
+
+    padding-top: 80px;
+    padding-bottom: 80px;
+    background: #7572FC;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+.messagewitharrow {
+    align-self:flex-start;
+    position: relative;
+    left: 5%;
+    font-weight: 600;
+    color: white;
+    text-shadow: 1px 1px 2px white, 0 0 25px white, 0 0 5px darkblue;
+}
+.see{
+    color: white;
+    text-shadow: 1px 1px 2px white, 0 0 25px white, 0 0 5px darkblue;
+}
+
+
+
+}

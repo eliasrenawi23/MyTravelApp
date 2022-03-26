@@ -7,12 +7,13 @@ interface list {
 const InputComp = (props: list) => {
     const { propsname } = props;
     return (
-        <div>
+        <div className="InputComplabelDiv">
             <input id={propsname} type="checkbox" />
             <label className={"InputComplabel "+propsname} htmlFor={propsname}></label>
         </div>
 
     );
+    
 }
 
 export default InputComp
