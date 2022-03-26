@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../store';
 import axios from 'axios';
-import { NULL } from 'sass';
 
 
 
@@ -14,6 +13,7 @@ export interface UserInfo {
     ProfileImg: string;
     Id: string;
   }
+  token?:string;
   Islogin: boolean;
   status: 'idle' | 'loading' | 'failed';
 
@@ -36,6 +36,7 @@ export const loginAsync = createAsyncThunk(
   async (loginInfo: any, thunkAPI) => {
     // const{ Email,Password} =loginInfo;
     //to do encrept logindata
+    console.log(loginInfo);
 
     try {
       const response = await axios.post('http://localhost:3001/users/login', loginInfo, { withCredentials: true })
@@ -56,8 +57,6 @@ export const loginAsync = createAsyncThunk(
 export const SignupAsync = createAsyncThunk(
   'user/Signup',
   async (loginInfo: any, thunkAPI) => {
-    // const{ Email,Password} =loginInfo;
-    //to do encrept logindata
     try {
       const response = await axios.post('http://localhost:3001/users/Signup', loginInfo, { withCredentials: true })
       const data: any = response.data
@@ -77,8 +76,6 @@ export const SignupAsync = createAsyncThunk(
 export const logoutAsync = createAsyncThunk(
   'user/logout',
   async (loginInfo: any, thunkAPI) => {
-    // const{ Email,Password} =loginInfo;
-    //to do encrept logindata
     try {
       const response = await axios.post('http://localhost:3001/users/logout', loginInfo, { withCredentials: true })
       const data: any = response.data

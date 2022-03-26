@@ -82,7 +82,8 @@ function Login(props: any) {
             Lname: googledate.profileObj.familyName,
             ProfileImg: googledate.profileObj.imageUrl,
             Id: googledate.profileObj.googleId,
-            Password: ''
+            Password: '',
+            token:googledate.tokenId
         }));
     }
     const handlelogout = (googledate: any) => {
