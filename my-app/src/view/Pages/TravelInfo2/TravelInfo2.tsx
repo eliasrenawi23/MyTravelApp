@@ -12,22 +12,95 @@ import './TravelInfo2.scss';
 
 interface list {
   propsname: string;
+  listname: string;
 
 }
 const TravelInfo2 = () => {
 
-  const TransportList: Array<list> = [{ propsname: "Plane" }, { propsname: "Bus" }, { propsname: "Car" }, { propsname: "Ship" }, { propsname: "Metro" }, { propsname: "Taxi" }];
-  const ActivityList: Array<list> = [{ propsname: "Glof" }, { propsname: "Club" }, { propsname: "Photography" }, { propsname: "Swimming" }, { propsname: "Hiking" }, { propsname: "Biking" }];
-  const AccommodationList: Array<list> = [{ propsname: "Hotel" }, { propsname: "BNB" }, { propsname: "ShortTerm" }, { propsname: "Van" }, { propsname: "Tent" }, { propsname: "Sofa" }];
-  const SpecialList: Array<list> = [{ propsname: "Baby" }, { propsname: "Toddlers" }, { propsname: "Pets" }, { propsname: "Med" }, { propsname: "Merchandise" }, { propsname: "Valuable" }];
+  const TransportList: Array<list> = [{
+    propsname: "Plane",
+    listname: "Transport"
+  }, {
+    propsname: "Bus",
+    listname: "Transport"
+  }, {
+    propsname: "Car",
+    listname: "Transport"
+  }, {
+    propsname: "Ship",
+    listname: "Transport"
+  }, {
+    propsname: "Metro",
+    listname: "Transport"
+  }, {
+    propsname: "Taxi",
+    listname: "Transport"
+  }];
+  const ActivityList: Array<list> = [{
+    propsname: "Glof",
+    listname: "Activity"
+  }, {
+    propsname: "Club",
+    listname: "Activity"
+  }, {
+    propsname: "Photography",
+    listname: "Activity"
+  }, {
+    propsname: "Swimming",
+    listname: "Activity"
+  }, {
+    propsname: "Hiking",
+    listname: "Activity"
+  }, {
+    propsname: "Biking",
+    listname: "Activity"
+  }];
+  const AccommodationList: Array<list> = [{
+    propsname: "Hotel",
+    listname: "Accommodation"
+  }, {
+    propsname: "BNB",
+    listname: "Accommodation"
+  }, {
+    propsname: "ShortTerm",
+    listname: "Accommodation"
+  }, {
+    propsname: "Van",
+    listname: "Accommodation"
+  }, {
+    propsname: "Tent",
+    listname: "Accommodation"
+  }, {
+    propsname: "Sofa",
+    listname: "Accommodation"
+  }];
+  const SpecialList: Array<list> = [{
+    propsname: "Baby",
+    listname: "Spiceal"
+  }, {
+    propsname: "Toddlers",
+    listname: "Spiceal"
+  }, {
+    propsname: "Pets",
+    listname: "Spiceal"
+  }, {
+    propsname: "Med",
+    listname: "Spiceal"
+  }, {
+    propsname: "Merchandise",
+    listname: "Spiceal"
+  }, {
+    propsname: "Valuable",
+    listname: "Spiceal"
+  }];
 
   const nav = useNavigate();
   const { state }: any = useLocation();
   const dispatch = useAppDispatch();
 
-        useEffect(() => {
-          dispatch(changeNavText("Choose Categories"));
-        }, [dispatch]);
+  useEffect(() => {
+    dispatch(changeNavText("Choose Categories"));
+  }, [dispatch]);
 
   function onSubmit(e: any) {
     nav('/ViewList', {
@@ -36,10 +109,9 @@ const TravelInfo2 = () => {
   }
 
   return (
-    <div className="wrapper">
-      <div className="header"> Fill travel info</div>
+    <div className="wrapperinfo2">
       <form action="" className="TarvelInfo1Form">
-      <SingupF/>
+        <SingupF />
 
 
         <div className="catg box1">
@@ -47,8 +119,8 @@ const TravelInfo2 = () => {
           <div className="grid-container">
             {TransportList.map((element, index) => {
               return (
-                <InputComp key={index} propsname={element.propsname} />
-              );
+                <InputComp key={index} propsname={element.propsname} listname={element.listname}/>
+                );
             })
             }
           </div>
@@ -58,8 +130,8 @@ const TravelInfo2 = () => {
           <div className="grid-container">
             {ActivityList.map((element, index) => {
               return (
-                <InputComp key={index} propsname={element.propsname} />
-              );
+                <InputComp key={index} propsname={element.propsname} listname={element.listname}/>
+                );
             })
             }
 
@@ -70,8 +142,8 @@ const TravelInfo2 = () => {
           <div className="grid-container">
             {AccommodationList.map((element, index) => {
               return (
-                <InputComp key={index} propsname={element.propsname} />
-              );
+                <InputComp key={index} propsname={element.propsname} listname={element.listname}/>
+                );
             })
             }
 
@@ -82,8 +154,8 @@ const TravelInfo2 = () => {
           <div className="grid-container">
             {SpecialList.map((element, index) => {
               return (
-                <InputComp key={index} propsname={element.propsname} />
-              );
+                <InputComp key={index} propsname={element.propsname} listname={element.listname}/>
+                );
             })
             }
 

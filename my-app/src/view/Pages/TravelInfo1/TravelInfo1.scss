@@ -1,16 +1,17 @@
 @import url("https://cdn.syncfusion.com/ej2/material.css");
 
 
-.wrapper {
-
+.wrapperinfo1 {
     margin: 4px, 4px;
     padding: 4px;
+    padding-top: 80px;
     // background-color: green;
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     padding-bottom: 60px;
     text-align: justify;
+    background-color: #E5E5E5;
     width: 100%;
 
     .text {
@@ -30,7 +31,7 @@
 
         input {
             height: 38px;
-            width: 100%;
+            width: 70vw;
             border-radius: 9px;
 
         }

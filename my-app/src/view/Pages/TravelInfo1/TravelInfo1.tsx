@@ -3,7 +3,7 @@ import { CalendarComponent } from '@syncfusion/ej2-react-calendars';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { changeNavText } from '../../../app/reducer/NavTextReducer';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import InputComp from '../../components/InputComp/InputComp';
 import SingupF from '../../components/LoginF/LoginF';
 
@@ -11,14 +11,51 @@ import SingupF from '../../components/LoginF/LoginF';
 
 interface list {
     propsname: string;
-
+    listname: string
 }
 
 const TravelInfo1 = () => {
-    const TravelPList: Array<list> = [{ propsname: "leisure" }, { propsname: "business" }, { propsname: "roadTrip" }, { propsname: "family" }, { propsname: "study" }, { propsname: "grieving" }];
-    const LuggagePList: Array<list> = [{ propsname: "trolly" }, { propsname: "suitcase" }, { propsname: "briefcase" }, { propsname: "backpack" }, { propsname: "handbag" }, { propsname: "multy" }];
-   
+    const TravelPList: Array<list> = [{
+        propsname: "leisure",
+        listname: "travelPurpos"
+    }, {
+        propsname: "business",
+        listname: "travelPurpos"
+    }, {
+        propsname: "roadTrip",
+        listname: "travelPurpos"
+    }, {
+        propsname: "family",
+        listname: "travelPurpos"
+    }, {
+        propsname: "study",
+        listname: "travelPurpos"
+    }, {
+        propsname: "grieving",
+        listname: "travelPurpos"
+    }];
+    const LuggagePList: Array<list> = [{
+        propsname: "trolly",
+        listname: "Luggage"
+    }, {
+        propsname: "suitcase",
+        listname: "Luggage"
+    }, {
+        propsname: "briefcase",
+        listname: "Luggage"
+    }, {
+        propsname: "backpack",
+        listname: "Luggage"
+    }, {
+        propsname: "handbag",
+        listname: "Luggage"
+    }, {
+        propsname: "multy",
+        listname: "Luggage"
+    }];
 
+    const [Destination, setDestination] = useState("");
+    const [people, setpeople] = useState(0);
 
 
     const nav = useNavigate();
@@ -38,23 +75,22 @@ const TravelInfo1 = () => {
 
 
     return (
-        <div className="wrapper">
+        <div className="wrapperinfo1">
 
-            <div className="header"> Fill travel info</div>
             <form action="" className="TarvelInfo1Form">
-                <SingupF/>
+                <SingupF />
                 <div className=" text whereHeader">Where</div>
-                <input type="text" placeholder='Type here' className='whereInput' />
+                <input type="text" placeholder='Type here' className='whereInput' onChange={(e: any) => setDestination(e.target.valu)} />
                 <div className="text whenHeader">When</div>
                 <CalendarComponent id="calendar" isMultiSelection={true}></CalendarComponent>
                 <div className=" text HowMany">Whow many People</div>
-                <input type="text" placeholder='Type here' className='HowManyInput' />
+                <input type="text" placeholder='Type here' className='HowManyInput' onChange={(e: any) => setpeople(e.target.valu)} />
                 <div className=" text TravelP">Travel Purpose</div>
                 <div className="grid-container">
 
                     {TravelPList.map((element, index) => {
                         return (
-                            <InputComp key={index} propsname={element.propsname} />
+                            <InputComp key={index} propsname={element.propsname} listname={element.listname} />
                         );
                     })
                     }
@@ -64,7 +100,7 @@ const TravelInfo1 = () => {
                 <div className="grid-container">
                     {LuggagePList.map((element, index) => {
                         return (
-                            <InputComp key={index} propsname={element.propsname} />
+                            <InputComp key={index} propsname={element.propsname} listname={element.listname} />
                         );
                     })
                     }

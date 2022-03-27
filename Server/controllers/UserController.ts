@@ -39,11 +39,11 @@ exports.login = async (req, res) => {
         FisrtName: Fname,
         LastName: Lname,
         imageUrl: ProfileImg,
-        Id: newId,
+        _id: newId,
         password: ""
       })
       _user.save().then("Users saved!");
-      const encodedJWT = jwt.encode({ userId: newId }, JWT_SECRET);
+      const encodedJWT = jwt.encode({ userId: _user._id , isLogedin: true }, JWT_SECRET);
       res.cookie("userLogin", encodedJWT);
       res.send({ ok: true, Users: _user });
     }
@@ -53,8 +53,8 @@ exports.login = async (req, res) => {
         res.send({ ok: false, Users: null }); //the user is not database 
       }
       else if (await bcrypt.compare(Password, _user.password)) {  ///to be contenuo
-        const validPass=await bcrypt.compare(_user.password,Password);
-        const encodedJWT = jwt.encode({ userId: newId, isLogedin: true }, JWT_SECRET);
+            console.log({ userId: _user._id});
+        const encodedJWT = jwt.encode({  userId: _user._id, isLogedin: true }, JWT_SECRET);
         res.cookie("userLogin", encodedJWT);
         // console.log("cookie :", res.cookie("userLogin",{id:_user.Id},{ path: '/login' }));
         res.status(200).send({
