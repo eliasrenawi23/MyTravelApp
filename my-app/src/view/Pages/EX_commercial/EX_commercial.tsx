@@ -5,89 +5,53 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from "react-places-autocomplete";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import axios from "axios";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { getHotel, getHoteldataAsync } from "../../../app/reducer/hotelReduser";
+
+
+interface hoteldata {
+  name: string;  //hotel_name
+  adress: string; //address
+  Photo: string; //max_1440_photo_url
+
+}
 
 
 const EX_commercial = () => {
+  const hotel = useAppSelector(getHotel);
+  const dispatch = useAppDispatch();
   const [address, setAddress] = useState("");
-  const [coordinates, setCoordinates] = useState({
-    lat: null,
-    lng: null
-  });
-      //const API_KEY = API_KEY_FROM_GOOGLE  // how to get key - step are below
+  const [Name, setName] = useState("");
+  const [Photo, setPhoto] = useState("");
 
- async function  getplace(){
-    
-    try {
+  const [lat, setlat] = useState("");
+  const [lng, setlng] = useState("");
 
-      const res= await Geocode.fromAddress("Eiffel Tower")
-        const { lat, lng } = res.results[0].geometry.location;
-        console.log(lat, lng);
-  
-    } catch (error) {
-      console.error(error);
-    }
-   
-  }
 
-  const handleSelect = async (value:string) => {
-    const results = await geocodeByAddress(value);
-    const latLng = await getLatLng(results[0]);
-    setAddress(value);
-    setCoordinates(latLng);
-  };
+  useEffect(() => {
+    // dispatch(getWeatherInfoAsync("New York"));
+    dispatch(getHoteldataAsync());
+
+    setAddress(hotel.hotelinfo.adress);
+    setName(hotel.hotelinfo.name);
+    setPhoto(hotel.hotelinfo.Photo);
+
+  }, []);
+
+
   return (
-    <div>
-    <PlacesAutocomplete
-      value={address}
-      onChange={setAddress}
-      onSelect={handleSelect}
-    >
-      {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-        <div>
-          <p>Latitude: {coordinates.lat}</p>
-          <p>Longitude: {coordinates.lng}</p>
+    <div className='commercialworapper'>
+      <div className="checkoutthehotel"> check out {Name}</div>
 
-          <input {...getInputProps({ placeholder: "Type address" })} />
-
-          <div>
-            {loading ? <div>...loading</div> : null}
-
-            {suggestions.map(suggestion => {
-              const style = {
-                backgroundColor: suggestion.active ? "#41b6e6" : "#fff"
-              };
-
-              return (
-                <div {...getSuggestionItemProps(suggestion, { style })}>
-                  {suggestion.description}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-    </PlacesAutocomplete>
-  </div>
-);
-  // return (
-  //   <div className='commercialworapper'>EX_commercial
+      <img className="hotelImg " src={Photo} alt="" />
+      <div className="hotel name">{Name}.</div>
+      <div className="hotel Add">{address}.</div>
 
 
-  //     {/* <button  className='bouttonss' onClick={getplace}>getplace</button> */}
-  //     {/* <div >
-  //        <GoogleComponent
-         
-  //         apiKey={API_KEY}
-  //         language={'en'}
-  //         country={'country:in|country:us'}
-  //         coordinates={true}
-  //         locationBoxStyle={'custom-style'}
-  //         locationListStyle={'custom-style-list'}
-  //         onChange={(e) => { this.setState({ place: e }) }} />
-  //     </div> */}
-  //   </div>
-  // )
+    </div>
+  );
 }
 
-export default EX_commercial
+export default EX_commercial;

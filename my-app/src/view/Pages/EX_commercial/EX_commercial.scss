@@ -1,7 +1,30 @@
 .commercialworapper{
+    background-color: #7572FC;
+    min-height: 100vh;
     padding-top: 100px;
     .bouttonss{
         width: 100px;
         height: 50px;
+    }
+
+    .hotelImg{
+        width: 100vw;
+        height: 50vh;
+    }
+    .checkoutthehotel{
+    text-align: center;
+    font-size: x-large;
+    font-weight: 600;
+    color: white;
+    text-shadow: 1px 1px 2px white, 0 0 25px white, 0 0 5px darkblue;
+
+    }
+    .hotel{
+        padding: 5px;
+    font-size: x-large;
+    font-weight: 600;
+    color: white;
+    text-shadow: 1px 1px 2px white, 0 0 25px white, 0 0 5px darkblue;
+
     }
 }
