@@ -19,6 +19,8 @@ import Preparing from './view/components/Preparing/Preparing';
 import SummeryPage from './view/Pages/SummeryPage/SummeryPage';
 import SignUp from './view/Pages/SignUp/SignUp';
 import Personal_compass from './view/Pages/Personal_compass/Personal_compass';
+import EX_commercial from './view/Pages/EX_commercial/EX_commercial';
+import Articale_page from './view/Pages/Articale_page/Articale_page';
 
 
 
@@ -40,6 +42,8 @@ function App() {
         <Route path="/Test" element={<Test />} />
         <Route path="/SummeryPage" element={<SummeryPage />} />
         <Route path="/Personal_compass" element={<Personal_compass />} />
+        <Route path="/EX_commercial" element={<EX_commercial />} />
+        <Route path="/Articale_page" element={<Articale_page />} />
         
 
       </Routes>
