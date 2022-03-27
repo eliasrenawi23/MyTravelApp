@@ -37,7 +37,7 @@ const EX_commercial = () => {
     setAddress(hotel.hotelinfo.adress);
     setName(hotel.hotelinfo.name);
     setPhoto(hotel.hotelinfo.Photo);
-
+  console.log(hotel);
   }, []);
 
 
