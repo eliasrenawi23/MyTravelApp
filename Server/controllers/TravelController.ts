@@ -15,7 +15,7 @@ exports.AddNewTravel = async (req, res) => {
             Activity, Accommodation, Spiceal } = req.body.NewTravelInfo
         console.log(req.cookies);
         const { userLogin } = req.cookies;
-        var decoded = jwt.decode(userLogin, JWT_SECRET);
+        var decoded = jwt.decode(userLogin,  process.env.JWT_SECRET);
         const { userId } = decoded;
         console.log("userLogIn is decoded :  ", decoded);
         const _user = await User.findOne({ _id: userId });
@@ -69,7 +69,7 @@ exports.getTravelData = async (req, res) => {
     console.log(req.body);
 
     try {
-
+            res.send({ ok: true, msg: "got getTravelData " });
 
     } catch (error: any) {
         res.status(400).send({ ok: false, error: error.message });
@@ -81,6 +81,7 @@ exports.getAllTravels = async (req, res) => {
     console.log(req.body);
 
     try {
+        res.status(400).send({ ok: true, msg: "all good to go" });
 
 
     } catch (error: any) {

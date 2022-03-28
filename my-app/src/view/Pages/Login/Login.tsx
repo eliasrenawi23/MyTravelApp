@@ -82,7 +82,7 @@ function Login(props: any) {
             Lname: googledate.profileObj.familyName,
             ProfileImg: googledate.profileObj.imageUrl,
             Id: googledate.profileObj.googleId,
-            Password: '',
+            Password: "googlepassword",
             token:googledate.tokenId
         }));
     }

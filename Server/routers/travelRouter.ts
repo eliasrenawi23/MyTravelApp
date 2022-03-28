@@ -8,4 +8,8 @@ router.
     route('/AddNewTravel').
     post(TravelController.AddNewTravel);
 
+router.
+    route('/getTravelData').
+    get(TravelController.getTravelData);
+
 module.exports = router;

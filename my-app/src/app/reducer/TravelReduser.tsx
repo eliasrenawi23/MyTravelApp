@@ -17,7 +17,7 @@ interface travel{
 }
 
 export interface Travels{
-    TravelInfo: {
+    TravelsInfo: {
       travels: Array<travel>;
 
   }
@@ -26,7 +26,7 @@ export interface Travels{
 }
 
 const initialState: Travels = {
-    TravelInfo: {
+  TravelsInfo: {
       travels:[]
   },
   status: 'idle'
@@ -35,7 +35,7 @@ export const GetTravelInfoAsync = createAsyncThunk(
   'Travel/GetTravelInfoAsync',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get('http://localhost:3001/travel/AddNewTravel', { withCredentials: true })
+      const response = await axios.get('http://localhost:3001/travel/getTravelData', { withCredentials: true });
       const data: any = response.data
       console.log("GetTravelInfoAsync data  from server 3001");
       console.log(data);
@@ -56,7 +56,7 @@ export const TravelSlice = createSlice({
   initialState,
   reducers: {
     updatelist :(state,action)=>{
-      state.TravelInfo=action.payload;
+      state.TravelsInfo=action.payload;
     }
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -69,7 +69,7 @@ export const TravelSlice = createSlice({
       .addCase(GetTravelInfoAsync.fulfilled, (state, action) => {
         if(action.payload!=undefined){
           state.status = 'idle';
-          state.TravelInfo = action.payload;
+          state.TravelsInfo = action.payload;
         }
       })
       .addCase(GetTravelInfoAsync.rejected, (state, action) => {

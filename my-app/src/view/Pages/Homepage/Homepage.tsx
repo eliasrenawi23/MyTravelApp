@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { changeNavText } from '../../../app/reducer/NavTextReducer';
-import { GetTravelInfoAsync } from '../../../app/reducer/TravelReduser';
+import { GetTravel, GetTravelInfoAsync } from '../../../app/reducer/TravelReduser';
 import './Homepage.scss';
 
 const Homepage = () => {
@@ -10,9 +10,13 @@ const Homepage = () => {
     const nav = useNavigate();
     const {state}:any = useLocation();
     const dispatch = useAppDispatch();
+    const alltravels = useAppSelector(GetTravel);
+
 
     useEffect(() => {
+        dispatch(GetTravelInfoAsync());
         dispatch(changeNavText(""));
+
       }, [dispatch]);
 
 

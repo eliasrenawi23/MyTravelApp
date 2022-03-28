@@ -1,3 +1,4 @@
+import { isUserLoggedIn } from "./controllers/UserController";
 import Category from "./model/CategoryModel";
 import Item from "./model/ItmesModel";
 import Travel from "./model/travelModel";
@@ -10,6 +11,8 @@ const nodemailer = require("nodemailer");
 const http = require('http');
 const cors = require('cors');
 const jwt = require('jwt-simple');
+var crypto = require("crypto");
+
 
 const app = express();
 const server = http.createServer(app);
@@ -41,11 +44,20 @@ db.once("open", () => {
 });
 
 app.get('/', (req, res) => {
+    var newId:string = crypto.randomBytes(12).toString('hex');
+    //var newId: string = Math.floor(Math.random() * 1000000000000000000000000).toString();
+    const encodedJWT = jwt.encode({ userId: newId, isLogedin: false },  process.env.JWT_SECRET);
+    res.cookie("publicuser", encodedJWT);
+    res.status(200).send({ ok: true, newIdencoded: encodedJWT });
     res.send('Hello World!');
 });
 
+
+
 const userRouter = require('./routers/userRouter');
 app.use('/users', userRouter);
+
+app.use(isUserLoggedIn);
 
 const travelRouter = require('./routers/travelRouter');
 app.use('/travel', travelRouter);
