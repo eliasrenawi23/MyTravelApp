@@ -9,7 +9,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [NavHeader, setNavHeader] = useState("");
   const NavText = useAppSelector(ChangeNav);
-  console.log(NavText);
 
   useEffect(() => {
     setNavHeader(NavText.Header);
