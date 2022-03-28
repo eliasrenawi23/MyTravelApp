@@ -39,8 +39,25 @@ const initialState: NewTravel = {
     status: 'idle'
 };
 
+export const AddNewTravelAsync = createAsyncThunk(
+    'Travel/GetTravelInfoAsync',
+    async (NewTravelData: NewTravel, thunkAPI) => {
+        try {
+            const response = await axios.post('http://localhost:3001/travel/AddNewTravel', NewTravelData, { withCredentials: true })
+            const data: any = response.data
+            console.log("GetTravelInfoAsync data  from server 3001");
+            console.log(data);
+            if (!data.ok)
+                return thunkAPI.rejectWithValue("failed");
+            else return data;
+        } catch (error: any) {
+            //console.log(error);
+            //thunkAPI.rejectWithValue("failed");
+            thunkAPI.rejectWithValue(error.response.data)
+        }
 
-
+    }
+);
 
 export const NewTravelSlice = createSlice({
     name: 'NewTravel',
@@ -104,8 +121,18 @@ export const NewTravelSlice = createSlice({
             state.NewTravelInfo.numberOfPeople = Number(action.payload.numberOfPeople);
         },
     },
-
-
+    extraReducers: (builder) => {
+        builder
+            .addCase(AddNewTravelAsync.pending, (state, action) => {
+                state.status = 'loading';
+            })
+            .addCase(AddNewTravelAsync.fulfilled, (state, action) => {
+                action.payload.ok ? state.status = 'idle' : state.status = 'failed';
+            })
+            .addCase(AddNewTravelAsync.rejected, (state, action) => {
+                state.status = 'failed';
+            })
+    },
 
 });
 

@@ -6,6 +6,6 @@ const TravelController = require('../controllers/TravelController');
 
 router.
     route('/AddNewTravel').
-    get(TravelController.AddNewTravel);
+    post(TravelController.AddNewTravel);
 
 module.exports = router;

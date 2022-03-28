@@ -1,0 +1,41 @@
+.collapsibleCompWorapper{
+    
+    //background-color: #7572FC; //to change
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2px;
+    border-radius: 10px;
+    cursor: pointer;
+   // color: #ffffff;
+    width: 100%;
+    margin: 2px;
+    .notlist{
+        padding-top: 30px;
+        background-color:  #F9F9F9;
+    }
+    .collapsibleCompheader{
+         //width: 50vm;
+         font-family: Poppins;
+         font-style: normal;
+         font-weight: normal;
+         font-size: 20px;
+         line-height: 30px;
+         width: 90vw;
+         background: #7572FC;
+         border-radius: 10px;
+         padding: 6px;
+
+         &:hover {
+             background-color: #504df7;
+         }
+    }
+    .collapsibleContent{
+        //background-color: #33cc3b;
+
+        border-radius: 10px;
+        width: 80vw;
+
+
+    }
+}

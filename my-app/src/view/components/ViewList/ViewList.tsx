@@ -71,7 +71,7 @@ function ViewList() {
     )
 
     return (
-        <div className="wrapper ">
+        <div className="ViewListwrapper ">
 
             <div className="listheader">
                 {listContent.map((element, index) => {

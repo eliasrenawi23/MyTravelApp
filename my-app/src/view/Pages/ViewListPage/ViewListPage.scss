@@ -1,0 +1,42 @@
+.ViewListPageWorapper {
+    padding: 80px;
+
+
+    .ListContainer {
+        left: 0px;
+        top: 129px;
+        color: white;
+
+    }
+
+    .notlist {
+        position: relative;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .congratMsgt {
+
+            font-family: 'Fira Sans', sans-serif;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 125.5%;
+            text-align: center;
+            color: rgba(2, 2, 5, 0.8);
+
+        }
+
+        .signUpbtn {
+            height: 47.75px;
+            width: 257px;
+            left: 0px;
+            top: 0px;
+            border-radius: 16px;
+            background: #FF8074;
+            border-radius: 16px;
+        }
+    }
+
+}

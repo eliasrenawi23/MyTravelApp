@@ -21,6 +21,7 @@ import SignUp from './view/Pages/SignUp/SignUp';
 import Personal_compass from './view/Pages/Personal_compass/Personal_compass';
 import EX_commercial from './view/Pages/EX_commercial/EX_commercial';
 import Articale_page from './view/Pages/Articale_page/Articale_page';
+import ViewListPage from './view/Pages/ViewListPage/ViewListPage';
 
 
 
@@ -37,7 +38,7 @@ function App() {
         <Route path="/TravelInfo2" element={< TravelInfo2/>} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/ViewList" element={<ViewList />} />
+        <Route path="/ViewListPage" element={<ViewListPage />} />
         <Route path="/Preparing" element={<Preparing />} />
         <Route path="/Test" element={<Test />} />
         <Route path="/SummeryPage" element={<SummeryPage />} />

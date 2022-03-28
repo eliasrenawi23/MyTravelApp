@@ -1,8 +1,9 @@
 
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { changeNavText } from '../../../app/reducer/NavTextReducer';
+import { AddNewTravelAsync, GetTravel } from '../../../app/reducer/NewTravelReduser';
 import InputComp from '../../components/InputComp/InputComp';
 import SingupF from '../../components/LoginF/LoginF';
 
@@ -97,13 +98,18 @@ const TravelInfo2 = () => {
   const nav = useNavigate();
   const { state }: any = useLocation();
   const dispatch = useAppDispatch();
+  const newTravel = useAppSelector(GetTravel);
+
 
   useEffect(() => {
     dispatch(changeNavText("Choose Categories"));
   }, [dispatch]);
 
   function onSubmit(e: any) {
-    nav('/ViewList', {
+
+    dispatch(AddNewTravelAsync(newTravel));
+
+    nav('/ViewListPage', {
       state: state
     });
   }

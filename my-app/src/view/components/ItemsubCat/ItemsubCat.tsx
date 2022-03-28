@@ -1,14 +1,13 @@
 import React from 'react'
-import './ItemInList.scss';
 
 interface item {
     name: string;
     quantity: number;
 
 }
-const ItemInList = (props: item) => {
-    const { name, quantity } = props;
 
+const ItemsubCat = (props: item) => {
+    const { name, quantity } = props;
     return (
         <div className="inputGroup">
             <input id={name} name={name} type="checkbox" />
@@ -17,8 +16,7 @@ const ItemInList = (props: item) => {
                 <div className='quantitydiv'>{quantity}</div>
             </label>
         </div>
-
     )
 }
 
-export default ItemInList;
+export default ItemsubCat
