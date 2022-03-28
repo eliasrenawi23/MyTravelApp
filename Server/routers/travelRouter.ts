@@ -9,7 +9,7 @@ router.
     post(TravelController.AddNewTravel);
 
 router.
-    route('/getTravelData').
-    get(TravelController.getTravelData);
+    route('/getAllTravelsData').
+    get(TravelController.getAllTravelsData);
 
 module.exports = router;

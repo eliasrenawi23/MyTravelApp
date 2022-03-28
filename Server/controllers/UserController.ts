@@ -26,6 +26,8 @@ exports.login = async (req, res) => {
     console.log("ticket.getPayload()",ticket.getPayload());
   }
   try {
+    console.log(req.cookies);
+
     const { publicuser } = req.cookies;
     var decoded = jwt.decode(publicuser,  process.env.JWT_SECRET);
     const { userId } = decoded;
@@ -114,7 +116,7 @@ exports.Signup = async (req, res) => {
         FisrtName: Fname,
         LastName: Lname,
         imageUrl: ProfileImg,
-        Id: newId,
+        _id: new mongoose.Types.ObjectId(userId.toString()),
         password: hash,
         role: "user"
 
