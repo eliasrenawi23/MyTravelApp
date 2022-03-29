@@ -2,9 +2,19 @@ import { createAsyncThunk, createSlice, current, PayloadAction } from '@reduxjs/
 import { RootState, AppThunk } from '../store';
 import axios from 'axios';
 
+interface category {
+    CategoryName: string;
+    listincat: Array<item>;
+  }
+  
+  interface item {
+    name: string;
+    quantity: number;
+  }
 
-export interface NewTravel {
-    NewTravelInfo: {
+export interface OneTravel {
+    OneTravelInfo: {
+        _id: String;
         travelDateFrom: String,
         travelDateTo: String,
         travelDest: String,
@@ -14,7 +24,8 @@ export interface NewTravel {
         Transport: String[],
         Activity: String[],
         Accommodation: String[],
-        Spiceal: String[]
+        Spiceal: String[],
+        Listofcat: category[]
     }
     status: 'idle' | 'loading' | 'failed';
 
@@ -22,8 +33,9 @@ export interface NewTravel {
 
 
 
-const initialState: NewTravel = {
-    NewTravelInfo: {
+const initialState: OneTravel = {
+    OneTravelInfo: {
+        _id: "",
         travelDateFrom: "",
         travelDateTo: "",
         travelDest: "",
@@ -33,7 +45,9 @@ const initialState: NewTravel = {
         Transport: [],
         Activity: [],
         Accommodation: [],
-        Spiceal: []
+        Spiceal: [],
+        Listofcat: []
+
 
     },
     status: 'idle'
@@ -41,7 +55,7 @@ const initialState: NewTravel = {
 
 export const AddNewTravelAsync = createAsyncThunk(
     'Travel/GetTravelInfoAsync',
-    async (NewTravelData: NewTravel, thunkAPI) => {
+    async (NewTravelData: OneTravel, thunkAPI) => {
         try {
             const response = await axios.post('http://localhost:3001/travel/AddNewTravel', NewTravelData, { withCredentials: true })
             const data: any = response.data
@@ -73,41 +87,41 @@ export const NewTravelSlice = createSlice({
             const delAddval: string = action.payload.ValueToAddDel;
             switch (listname) {
                 case 'travelPurpos':
-                    if (state.NewTravelInfo.travelPurpos.includes(delAddval)) {
-                        state.NewTravelInfo.travelPurpos = arrayRemove(state.NewTravelInfo.travelPurpos, delAddval);
+                    if (state.OneTravelInfo.travelPurpos.includes(delAddval)) {
+                        state.OneTravelInfo.travelPurpos = arrayRemove(state.OneTravelInfo.travelPurpos, delAddval);
                     } else {
-                        state.NewTravelInfo.travelPurpos.push(delAddval);
+                        state.OneTravelInfo.travelPurpos.push(delAddval);
                     }
                     break;
                 case 'Luggage':
-                    if (state.NewTravelInfo.Luggage.includes(delAddval)) {
-                        state.NewTravelInfo.Luggage = arrayRemove(state.NewTravelInfo.Luggage, delAddval);
+                    if (state.OneTravelInfo.Luggage.includes(delAddval)) {
+                        state.OneTravelInfo.Luggage = arrayRemove(state.OneTravelInfo.Luggage, delAddval);
                     } else {
-                        state.NewTravelInfo.Luggage.push(delAddval);
+                        state.OneTravelInfo.Luggage.push(delAddval);
                     } break;
                 case 'Transport':
-                    if (state.NewTravelInfo.Transport.includes(delAddval)) {
-                        state.NewTravelInfo.Transport = arrayRemove(state.NewTravelInfo.Transport, delAddval);
+                    if (state.OneTravelInfo.Transport.includes(delAddval)) {
+                        state.OneTravelInfo.Transport = arrayRemove(state.OneTravelInfo.Transport, delAddval);
                     } else {
-                        state.NewTravelInfo.Transport.push(delAddval);
+                        state.OneTravelInfo.Transport.push(delAddval);
                     } break;
                 case "Activity":
-                    if (state.NewTravelInfo.Activity.includes(delAddval)) {
-                        state.NewTravelInfo.Activity = arrayRemove(state.NewTravelInfo.Activity, delAddval);
+                    if (state.OneTravelInfo.Activity.includes(delAddval)) {
+                        state.OneTravelInfo.Activity = arrayRemove(state.OneTravelInfo.Activity, delAddval);
                     } else {
-                        state.NewTravelInfo.Activity.push(delAddval);
+                        state.OneTravelInfo.Activity.push(delAddval);
                     } break;
                 case "Accommodation":
-                    if (state.NewTravelInfo.Accommodation.includes(delAddval)) {
-                        state.NewTravelInfo.Accommodation = arrayRemove(state.NewTravelInfo.Accommodation, delAddval);
+                    if (state.OneTravelInfo.Accommodation.includes(delAddval)) {
+                        state.OneTravelInfo.Accommodation = arrayRemove(state.OneTravelInfo.Accommodation, delAddval);
                     } else {
-                        state.NewTravelInfo.Accommodation.push(delAddval);
+                        state.OneTravelInfo.Accommodation.push(delAddval);
                     } break;
                 case "Spiceal":
-                    if (state.NewTravelInfo.Spiceal.includes(delAddval)) {
-                        state.NewTravelInfo.Spiceal = arrayRemove(state.NewTravelInfo.Spiceal, delAddval);
+                    if (state.OneTravelInfo.Spiceal.includes(delAddval)) {
+                        state.OneTravelInfo.Spiceal = arrayRemove(state.OneTravelInfo.Spiceal, delAddval);
                     } else {
-                        state.NewTravelInfo.Spiceal.push(delAddval);
+                        state.OneTravelInfo.Spiceal.push(delAddval);
                     }
                     break;
             }
@@ -115,11 +129,18 @@ export const NewTravelSlice = createSlice({
 
         },
         updatetimeandinputs: (state, action) => {
-            state.NewTravelInfo.travelDateFrom = action.payload.travelDateFrom;
-            state.NewTravelInfo.travelDateTo = action.payload.travelDateTo;
-            state.NewTravelInfo.travelDest = action.payload.travelDest;
-            state.NewTravelInfo.numberOfPeople = Number(action.payload.numberOfPeople);
+            state.OneTravelInfo.travelDateFrom = action.payload.travelDateFrom;
+            state.OneTravelInfo.travelDateTo = action.payload.travelDateTo;
+            state.OneTravelInfo.travelDest = action.payload.travelDest;
+            state.OneTravelInfo.numberOfPeople = Number(action.payload.numberOfPeople);
         },
+        loadTravel: (state, action) => {
+            state.OneTravelInfo = action.payload.element;
+        } ,
+        UpdateInViwlist: (state, action) => {
+            state=current(state);
+            state.OneTravelInfo.Listofcat = action.payload;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -136,6 +157,6 @@ export const NewTravelSlice = createSlice({
 
 });
 
-export const { updatelistInputcomp, updatetimeandinputs } = NewTravelSlice.actions;
-export const GetTravel = (state: RootState) => state.Travel;
+export const { updatelistInputcomp, updatetimeandinputs, loadTravel,UpdateInViwlist } = NewTravelSlice.actions;
+export const GetOneTravel = (state: RootState) => state.Travel;
 export default NewTravelSlice.reducer;

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { changeNavText } from '../../../app/reducer/NavTextReducer';
-import { AddNewTravelAsync, GetTravel } from '../../../app/reducer/NewTravelReduser';
+import { AddNewTravelAsync, GetOneTravel } from '../../../app/reducer/OneTravelReduser';
 import InputComp from '../../components/InputComp/InputComp';
 import SingupF from '../../components/LoginF/LoginF';
 
@@ -98,7 +98,7 @@ const TravelInfo2 = () => {
   const nav = useNavigate();
   const { state }: any = useLocation();
   const dispatch = useAppDispatch();
-  const newTravel = useAppSelector(GetTravel);
+  const newTravel = useAppSelector(GetOneTravel);
 
 
   useEffect(() => {

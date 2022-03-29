@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { GetUser } from '../../../app/reducer/dist/UserReducer';
 import { changeNavText } from '../../../app/reducer/NavTextReducer';
-import { GetTravel, GetTravelAllInfoAsync } from '../../../app/reducer/TravelReduser';
+import { loadTravel } from '../../../app/reducer/OneTravelReduser';
+import {  GetTravelAllInfoAsync, GetTravels } from '../../../app/reducer/TravelReduser';
 import './Homepage.scss';
-import Travelicon from "../../../icons/TravelIconBlue.png";
-import Traveliconblue from "../../../icons/tavelIcon.png";
+
 
 
 interface travel {
@@ -31,7 +31,7 @@ const Homepage = () => {
     const nav = useNavigate();
     const { state }: any = useLocation();
     const dispatch = useAppDispatch();
-    const alltravels = useAppSelector(GetTravel);
+    const alltravels = useAppSelector(GetTravels);
     const User = useAppSelector(GetUser);
     const [oneTravil, setoneTravil] = useState(null);
 
@@ -40,16 +40,16 @@ const Homepage = () => {
         dispatch(GetTravelAllInfoAsync());
         dispatch(changeNavText(""));
 
-    }, [dispatch, ]);
+    }, [dispatch,]);
 
     useEffect(() => {
         dispatch(changeNavText(""));
         console.log(oneTravil);
-        if(oneTravil!==null){
-        nav('/ViewListPage', {
-            state: state
-        });
-    }
+        if (oneTravil !== null) {
+            nav('/ViewListPage', {
+                state: state
+            });
+        }
 
     }, [oneTravil]);
 
@@ -86,8 +86,11 @@ const Homepage = () => {
                     var doneActive: string;
                     (comparedate(element.travelDateTo)) ? doneActive = "active" : doneActive = "done";
                     return (
-                        <div className={"box-ingrid-" + doneActive} onClick={(e: any) => (setoneTravil({ element })
-                        )}>
+                        <div className={"box-ingrid-" + doneActive} onClick={(e: any) => {
+                            setoneTravil({ element });
+                            dispatch(loadTravel({ element}));
+
+                        }}>
                             <div className="nameTravel">{element.travelDest}</div>
                         </div>
                     );
@@ -104,8 +107,10 @@ const Homepage = () => {
 
             <div className='NewTravelbtn_Wrapper'>
                 <button className='NewTravelbtn' onClick={clickNewTravel}>New Travel</button>
-                {true ? <div>                 <div className='year'>{new Date().getFullYear()}</div>
-                    <TravilList /></div> : null}
+                {true ? <div>
+                    <div className='year'>{new Date().getFullYear()}</div>
+                    <TravilList />
+                </div> : null}
             </div>
 
         </div>

@@ -48,7 +48,7 @@ exports.AddNewTravel = async (req, res) => {
 
         const Essentials = await new Category({
             CategoryName: "Essentials",
-            list: arreyofitemEssentials
+            listincat: arreyofitemEssentials
         })
 
         const Shirt = await new Item({
@@ -70,7 +70,7 @@ exports.AddNewTravel = async (req, res) => {
 
         const Clothes = await new Category({
             CategoryName: "Clothes",
-            list: arreyofitemClothes
+            listincat: arreyofitemClothes
         })
         const Conditioner = await new Item({
             name: 'Conditioner',
@@ -97,7 +97,7 @@ exports.AddNewTravel = async (req, res) => {
 
         const Care = await new Category({
             CategoryName: "Care",
-            list: arreyofitemCare
+            listincat: arreyofitemCare
         })
 
         const Shoes = await new Item({
@@ -125,7 +125,7 @@ exports.AddNewTravel = async (req, res) => {
 
         const Accessories = await new Category({
             CategoryName: "Accessories",
-            list: arreyofitemAccessories
+            listincat: arreyofitemAccessories
         })
 
         const arreyofCategory: typeof Category[] = [];

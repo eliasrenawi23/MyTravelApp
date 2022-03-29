@@ -1,6 +1,5 @@
-import { useDispatch } from 'react-redux';
 import { useAppDispatch } from '../../../app/hooks';
-import { updatelistInputcomp } from '../../../app/reducer/NewTravelReduser';
+import { updatelistInputcomp } from '../../../app/reducer/OneTravelReduser';
 import './InputComp.scss';
 
 interface list {

@@ -1,88 +1,133 @@
 import { useState, useEffect } from 'react'
-import useCollapse from 'react-collapsed';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { changeNavText } from '../../../app/reducer/NavTextReducer';
+import { GetOneTravel, UpdateInViwlist } from '../../../app/reducer/OneTravelReduser';
 import CollapsibleCompo from '../../components/CollapsibleCompo/CollapsibleCompo';
 import './ViewListPage.scss'
 
-interface list {
-  catInlListName: string;
-  incatList: Array<item>;
-
+interface category {
+  CategoryName: string;
+  listincat: Array<item>;
 }
+
 interface item {
   name: string;
   quantity: number;
-
 }
+
 const ViewListPage = () => {
-  const listContent: Array<list> =
+  const listContent: Array<category> =
     [
       {
-        catInlListName: "Essentials",
-        incatList: [{ name: "Passport", quantity: 1 }, { name: "Mobile", quantity: 1 }, { name: "Wallet", quantity: 1 }, { name: "Coins", quantity: 1 }]
+        CategoryName: "Essentials",
+        listincat: [{ name: "Passport", quantity: 1 }, { name: "Mobile", quantity: 1 }, { name: "Wallet", quantity: 1 }, { name: "Coins", quantity: 1 }]
       },
       {
-        catInlListName: "Clothes",
-        incatList: [{ name: "Shirt", quantity: 6 }, { name: "Pants", quantity: 3 }, { name: "Underwear", quantity: 6 }]
+        CategoryName: "Clothes",
+        listincat: [{ name: "Shirt", quantity: 6 }, { name: "Pants", quantity: 3 }, { name: "Underwear", quantity: 6 }]
       },
       {
-        catInlListName: "Care",
-        incatList: [{ name: "Conditioner", quantity: 1 }, { name: "Shampoo", quantity: 1 }, { name: "soap", quantity: 1 }, { name: "Tooth paser & brush", quantity: 1 }]
+        CategoryName: "Care",
+        listincat: [{ name: "Conditioner", quantity: 1 }, { name: "Shampoo", quantity: 1 }, { name: "soap", quantity: 1 }, { name: "Tooth paser & brush", quantity: 1 }]
       },
       {
-        catInlListName: "Accessories",
-        incatList: [{ name: "Shoes", quantity: 1 }, { name: "Phone charger", quantity: 1 }, { name: "Earphones", quantity: 1 }, { name: "Cat cage", quantity: 1 }]
+        CategoryName: "Accessories",
+        listincat: [{ name: "Shoes", quantity: 1 }, { name: "Phone charger", quantity: 1 }, { name: "Earphones", quantity: 1 }, { name: "Cat cage", quantity: 1 }]
       }
     ];
-  const [showResults, setShowResults] = useState(true);
-  const [isExpanded, setExpanded] = useState(false)
-  const { getCollapseProps, getToggleProps } = useCollapse({ isExpanded })
+  const [AddInput, setAddInput] = useState(false);
+  const [NewCatgeName, setNewCatgeName] = useState("");
   const nav = useNavigate();
   const { state }: any = useLocation();
   const dispatch = useAppDispatch();
+  const OneTravel = useAppSelector(GetOneTravel);
+  //const [usestatearrey, setusestatearrey] = useState(listContent);
+  const [usestatearrey, setusestatearrey] = useState(OneTravel.OneTravelInfo.Listofcat);
 
+console.log(OneTravel.OneTravelInfo.Listofcat);
+console.log(listContent);
+     
   useEffect(() => {
-    dispatch(changeNavText("NYC,oct 6th 2021,Trolly"));
+    var date:String[]=OneTravel.OneTravelInfo.travelDateFrom.split('T');
+    var header:String=OneTravel.OneTravelInfo.travelDest+','+date[0];
+     dispatch(changeNavText(header));
+
   }, [dispatch]);
 
   function clickSignup(e: any) {
-    setShowResults(true);
     nav('/Login', {
       state: state
     });
 
   }
-  const Results = () => (
-    <div id="results" className="search-results">
-      <h2>Travel is the only thing you buy that makes you richer</h2>
-    </div>
-  )
+
+  function addnewCategoryhandler(e: any) {
+    setAddInput(!AddInput);
+    console.log("add new category pressed")
+
+    //listContent.push()
+  }
+  function pushNewToArraey(e: any) {
+    console.log("pushNewToArraey")
+
+    const newlistcat: category = {
+      CategoryName: NewCatgeName,
+      listincat: []
+    }
+
+    listContent.push(newlistcat)
+    console.log(listContent)
+
+    //dispatch(UpdateInViwlist(listContent));
+
+    //setusestatearrey(listContent);
+    setNewCatgeName("");
+    console.log(listContent)
+
+  }
+
+
   return (
     <div className='ViewListPageWorapper'>
       <div className="ListContainer">
-        {listContent.map((element, index) => {
+        {usestatearrey.map((element, index) => { 
+           // var listofitems: item[]=[...element.listOfItems];
+            console.log(element.listincat); //type of cetogry contain listincat
           return (
-            <CollapsibleCompo key={index} catInlListName={element.catInlListName} incatList={element.incatList} />
+            <CollapsibleCompo key={index} CategoryName={element.CategoryName} listincat={element.listincat} />
           );
         })}
       </div>
-      <div className="notlist">
-        <div className='congratMsgt'>
-          <h1>Congrats!</h1>
-          <p>to save/edit, plase sign up
-          </p>
-        </div>
 
-        <button className='signUpbtn' onClick={clickSignup}>
-          Free Sign up to save & edit</button>
-        <div>
-          {showResults ?
-            <Results />
-            : null}
-        </div>
-      </div>
+      {true ?
+        <div className='Addnewcategory' >
+          <div className="cllabsediv" onClick={addnewCategoryhandler}>
+            <CollapsibleCompo CategoryName={"⊕ Add new Category"} listincat={[]} />
+          </div>
+          {AddInput ?
+            <div className='inputcontaINER'>
+              <form>
+                <label htmlFor="newcategory">Enter a Category name:</label>
+                <input type="text" id="phone" name="newcategory" placeholder="new Category name" onChange={(e: any) => (setNewCatgeName(e.target.value))} />
+                <input type="submit" onClick={pushNewToArraey}></input>
+              </form>
+            </div> : null}
+
+        </div> : <div className="notlist">
+          <div className='congratMsgt'>
+            <h1>Congrats!</h1>
+            <p>to save/edit, plase sign up
+            </p>
+          </div>
+
+          <button className='signUpbtn' onClick={clickSignup}>
+            Free Sign up to save & edit</button>
+          <div>
+
+          </div>
+        </div>}
+
 
     </div>
   )

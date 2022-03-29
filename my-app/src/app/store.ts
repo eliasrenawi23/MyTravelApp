@@ -1,7 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import hotelReduser from './reducer/hotelReduser';
 import NavtextSlice from './reducer/NavTextReducer';
-import NewTravelReduser from './reducer/NewTravelReduser';
+import NewTravelReduser from './reducer/OneTravelReduser';
 import TravelAds from './reducer/TravelAds';
 import TravelReduser from './reducer/TravelReduser';
 import UserReducer from './reducer/UserReducer';

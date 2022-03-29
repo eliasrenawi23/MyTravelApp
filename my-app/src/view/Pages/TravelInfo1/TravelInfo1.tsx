@@ -2,11 +2,11 @@ import './TravelInfo1.scss';
 import { CalendarComponent } from '@syncfusion/ej2-react-calendars';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { changeNavText } from '../../../app/reducer/NavTextReducer';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { useAppDispatch} from '../../../app/hooks';
 import { useEffect, useState } from 'react';
 import InputComp from '../../components/InputComp/InputComp';
 import SingupF from '../../components/LoginF/LoginF';
-import { updatetimeandinputs } from '../../../app/reducer/NewTravelReduser';
+import { updatetimeandinputs } from '../../../app/reducer/OneTravelReduser';
 
 
 

@@ -49,6 +49,7 @@ export const loginAsync = createAsyncThunk(
     } catch (error: any) {
       //console.log(error);
       //thunkAPI.rejectWithValue("failed");
+      alert(error.response.data);
       thunkAPI.rejectWithValue(error.response.data)
     }
 

@@ -90,5 +90,5 @@ export const TravelSlice = createSlice({
 //export const{getGetTravelInfoAsync} =TravelSlice.caseReducers;
 export const{updatelist} =TravelSlice.actions;
 
-export const GetTravel= (state: RootState) => state.Travellist;
+export const GetTravels= (state: RootState) => state.Travellist;
 export default TravelSlice.reducer;
