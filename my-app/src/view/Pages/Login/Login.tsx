@@ -39,8 +39,7 @@ function Login(props: any) {
     console.log(user);
     useEffect(() => {
         dispatch(changeNavText("Sign up to save List"));
-
-        if (user.Islogin == true) {
+        if (user.Islogin) {
             nav('/', {
                 state: state
             });
@@ -67,6 +66,7 @@ function Login(props: any) {
             Email: Email,
             Password: Password
         }));
+        console.log(user);
 
     }
     const handleFailure = (reasult: String) => {

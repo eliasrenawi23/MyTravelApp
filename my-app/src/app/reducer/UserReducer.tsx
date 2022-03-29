@@ -114,7 +114,7 @@ export const UserSlice = createSlice({
       .addCase(loginAsync.fulfilled, (state, action) => {
         if(action.payload!=undefined){
           state.status = 'idle';
-          state.userInfo = action.payload;
+          state.userInfo = action.payload.Users;
           state.Islogin = true;
         }
       })
@@ -139,7 +139,7 @@ export const UserSlice = createSlice({
       })
       .addCase(SignupAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.userInfo = action.payload;
+        state.userInfo = action.payload.Users;
         state.Islogin = true;
       })
       .addCase(SignupAsync.rejected, (state, action) => {
@@ -152,11 +152,6 @@ export const UserSlice = createSlice({
 
 
 });
-
-
-// export const{login} =UserSlice.actions;
-//export const { logout } = UserSlice.actions;
-//export const{getUserInfoAsync} =UserSlice.caseReducers;
 
 export const GetUser = (state: RootState) => state.User;
 export default UserSlice.reducer;

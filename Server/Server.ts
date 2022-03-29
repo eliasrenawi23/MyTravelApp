@@ -46,7 +46,7 @@ db.once("open", () => {
 app.get('/', (req, res) => {
     var newId:string = crypto.randomBytes(12).toString('hex');
     //var newId: string = Math.floor(Math.random() * 1000000000000000000000000).toString();
-    const encodedJWT = jwt.encode({ userId: newId, isLogedin: false },  process.env.JWT_SECRET);
+    const encodedJWT = jwt.encode({ userId: newId},  process.env.JWT_SECRET);
     res.cookie("publicuser", encodedJWT);
     res.status(200).send({ ok: true, newIdencoded: encodedJWT });
     res.send('Hello World!');

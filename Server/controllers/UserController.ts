@@ -15,21 +15,22 @@ const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 exports.login = async (req, res) => {
   console.log("login");
   console.log(req.body);
+  const { userLogin, publicuser } = req.cookies;
+  var cooki: any;
+  (!publicuser)? cooki = userLogin:cooki = publicuser;
   const { Email, Lname, Fname, Password, Id, ProfileImg, token } = req.body;
-  const email=Email.toLowerCase();
+  const email = Email.toLowerCase();
   if (req.body.token) {
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.CLIENT_ID,
     });
     res.status(201);
-    console.log("ticket.getPayload()",ticket.getPayload());
+    console.log("ticket.getPayload()", ticket.getPayload());
   }
   try {
     console.log(req.cookies);
-
-    const { publicuser } = req.cookies;
-    var decoded = jwt.decode(publicuser,  process.env.JWT_SECRET);
+    var decoded = jwt.decode(cooki, process.env.JWT_SECRET);
     const { userId } = decoded;
     console.log("publicuser is decoded :  ", decoded);
     const _user = await User.findOne({ Email: email });
@@ -45,9 +46,9 @@ exports.login = async (req, res) => {
         role: "user"
       })
       _user.save().then("Users saved!");
-      const encodedJWT = jwt.encode({ userId: _user._id, isLogedin: true },  process.env.JWT_SECRET);
+      const encodedJWT = jwt.encode({ userId: _user._id }, process.env.JWT_SECRET);
       res.clearCookie('publicuser');
-      res.cookie("userLogin", encodedJWT);
+      res.cookie("userLogin", encodedJWT, { maxAge: 24 * 60 * 60 * 1000 * 14 });
       res.send({ ok: true, Users: _user });
     }
     else {   //if not google user check the password
@@ -56,11 +57,11 @@ exports.login = async (req, res) => {
         res.send({ ok: false, Users: null }); //the user is not database 
       }
       else if (await bcrypt.compare(Password, _user.password)) {  ///to be contenuo
-        console.log({ userId: _user._id ,JWT_SECRET:process.env.JWT_SECRET});
+        console.log({ userId: _user._id, JWT_SECRET: process.env.JWT_SECRET });
 
-        const encodedJWT = jwt.encode({ userId: _user._id, isLogedin: true }, process.env.JWT_SECRET);
+        const encodedJWT = jwt.encode({ userId: _user._id }, process.env.JWT_SECRET);
         res.clearCookie('publicuser');
-        res.cookie("userLogin", encodedJWT);
+        res.cookie("userLogin", encodedJWT, { maxAge: 24 * 60 * 60 * 1000 * 14 });
         res.status(200).send({
           ok: true, Users: {
             Email: _user.Email,
@@ -88,6 +89,9 @@ exports.login = async (req, res) => {
 exports.logout = async (req, res) => {
   console.log("logout");
   res.clearCookie('userLogin');
+  var newId: string = crypto.randomBytes(12).toString('hex');
+  const encodedJWT = jwt.encode({ userId: newId }, process.env.JWT_SECRET);
+  res.cookie("publicuser", encodedJWT);
   res.status(204).send({ ok: true })
 };
 
@@ -98,12 +102,12 @@ exports.Signup = async (req, res) => {
   console.log(req.body);
 
   const { Email, Lname, Fname, Password, Id, ProfileImg } = req.body;
-  const email=Email.toLowerCase();
+  const email = Email.toLowerCase();
 
   const { publicuser } = req.cookies;
-  var decoded = jwt.decode(publicuser,  process.env.JWT_SECRET);
+  var decoded = jwt.decode(publicuser, process.env.JWT_SECRET);
   const { userId } = decoded;
-  var newId: string =userId;
+  var newId: string = userId;
 
   try {
     const hash = await bcrypt.hash(Password, 10);
@@ -123,8 +127,8 @@ exports.Signup = async (req, res) => {
       })
       _user.save().then("Users saved!");
 
-      const encodedJWT = jwt.encode({ userId: newId, isLogedin: true },  process.env.JWT_SECRET);
-      res.cookie("userLogin", encodedJWT);
+      const encodedJWT = jwt.encode({ userId: newId }, process.env.JWT_SECRET);
+      res.cookie("userLogin", encodedJWT, { maxAge: 24 * 60 * 60 * 1000 * 14 });
       res.status(200).send({ ok: true, Users: _user });
     }
   } catch (error: any) {
@@ -137,20 +141,20 @@ export function isUserLoggedIn(req, res, next) {
 
 
   try {
-    console.log("req.cookies",req.cookies);
+    console.log("req.cookies", req.cookies);
     const { userLogin } = req.cookies;
     if (!userLogin) {
       console.log("checkd if looged in but noo cooke");
-      var newId:string = crypto.randomBytes(12).toString('hex');
-      const encodedJWT = jwt.encode({ userId: newId, isLogedin: false },  process.env.JWT_SECRET);
-     
+      var newId: string = crypto.randomBytes(12).toString('hex');
+      const encodedJWT = jwt.encode({ userId: newId }, process.env.JWT_SECRET);
+
       res.cookie("publicuser", encodedJWT);
       res.status(200).send({ ok: true, newIdencoded: encodedJWT });
     } else {
       console.log("checkd if looged in and went to next function");
       next();
     }
-  } catch (err:any){
+  } catch (err: any) {
     console.error(err)
     res.send({ error: err.message });
   }

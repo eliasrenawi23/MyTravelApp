@@ -35,6 +35,19 @@
         }
 
     }
+    .year{
+        display: flex;
+        flex-direction: column;
+        justify-Content: center;
+        align-Items: center;
+        position: relative;
+        background-color: white;
+        border-radius: 16px;
+        width: 100vw;
+        height:50px ;
+        font-weight:600;
+        font-size:x-large;
+    }
 
     .NewTravelbtn_Wrapper {
         display: flex;
@@ -81,25 +94,52 @@
 
         .box-ingrid-done{
             justify-content: center;
+            display: flex;
+
+            background-image: url("../../../icons/tavelIcon.png");
+            background-repeat: no-repeat;
+            background-position: center top;
             align-items: center;
             align-self: center;
             width: 40vw;
             height: 40vw;
-            border: 1px solid black;
             border-radius: 30px;
             background-color: #7572FC;
+            color: white;
+            position: relative;
+
+            .nameTravel{
+
+                position: absolute;
+                color: white;
+                bottom: 40%;
+                align-self:center;
+
+            }
+
 
         }
         .box-ingrid-active{
             justify-content: center;
+            display: flex;
+
+            background-image: url("../../../icons/TravelIconBlue.png");
+            background-repeat: no-repeat;
+            background-position: center top;
             align-items: center;
             align-self: center;
             width: 40vw;
             height: 40vw;
-            border: 1px solid black;
             border-radius: 30px;
             background-color: white;
             color: #7572FC;
+            position: relative;
+
+            .nameTravel{
+                align-self:flex-end;
+                position: absolute;
+                bottom: 20%;
+            }
 
         }
 
