@@ -107,7 +107,7 @@ const Homepage = () => {
 
             <div className='NewTravelbtn_Wrapper'>
                 <button className='NewTravelbtn' onClick={clickNewTravel}>New Travel</button>
-                {true ? <div>
+                {User.Islogin ? <div>
                     <div className='year'>{new Date().getFullYear()}</div>
                     <TravilList />
                 </div> : null}

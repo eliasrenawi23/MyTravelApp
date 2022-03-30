@@ -17,7 +17,7 @@ const SummeryPage = () => {
 
 
     useEffect(() => {
-        // dispatch(getWeatherInfoAsync("New York"));
+        dispatch(getWeatherInfoAsync("New York"));
         dispatch(getTravelAdsInfoAsync());
         console.log(Weather);
         console.log(ads);
@@ -34,15 +34,18 @@ const SummeryPage = () => {
                 <div className="distantionName"></div>
                 <div className="dateoftrip"></div>
                 <div className="CompasIcon" onClick={() => {
-            nav('/Personal_compass', {
-                state: state
-            })
-        }}>
+                    nav('/Personal_compass', {
+                        state: state
+                    })
+                }}>
                 </div>
 
+            </div>  <div className='funthings'>
+                <h5>Fun things to know about {PlaceOfTrip}</h5>
+                <h5>Weather temperature {Weather.WeatherInfo.current.temperature}</h5>
+                <h5>Weather descriptions {Weather.WeatherInfo.current.weather_descriptions}</h5>
+                <h5>Feelslike {Weather.WeatherInfo.current.feelslike}</h5>
             </div>
-            <h3 className="funthings" >Fun things to know about {PlaceOfTrip}</h3>
-
 
             {ads.TravelAdsInfo.articles.map((element, index) => {
                 return (

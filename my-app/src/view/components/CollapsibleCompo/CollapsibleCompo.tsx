@@ -12,18 +12,14 @@ interface category {
     name: string;
     quantity: number;
   }
-const CollapsibleCompo = (props: category) => {
-    console.log(props);
-    
+const CollapsibleCompo = (props: category) => {    
     const { CategoryName, listincat } = props;
     const [isExpanded, setExpanded] = useState(false);
     var catname:string;
     (CategoryName==="⊕ Add new Category")?catname="⊕ Add new Category":catname='▲' + CategoryName;      
     const [catTitle, setEcatTitle] = useState(catname);
-
-
-
     const { getCollapseProps, getToggleProps } = useCollapse({ isExpanded });
+    
     function handleOnClick() {
         setExpanded(!isExpanded);
         if (isExpanded) {

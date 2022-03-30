@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { changeNavText } from '../../../app/reducer/NavTextReducer';
 import { GetOneTravel, UpdateInViwlist } from '../../../app/reducer/OneTravelReduser';
+import { GetUser } from '../../../app/reducer/UserReducer';
 import CollapsibleCompo from '../../components/CollapsibleCompo/CollapsibleCompo';
 import './ViewListPage.scss'
 
@@ -38,6 +39,7 @@ const ViewListPage = () => {
     ];
   const [AddInput, setAddInput] = useState(false);
   const [NewCatgeName, setNewCatgeName] = useState("");
+  const User = useAppSelector(GetUser);
   const nav = useNavigate();
   const { state }: any = useLocation();
   const dispatch = useAppDispatch();
@@ -45,15 +47,20 @@ const ViewListPage = () => {
   //const [usestatearrey, setusestatearrey] = useState(listContent);
   const [usestatearrey, setusestatearrey] = useState(OneTravel.OneTravelInfo.Listofcat);
 
-console.log(OneTravel.OneTravelInfo.Listofcat);
-console.log(listContent);
-     
-  useEffect(() => {
-    var date:String[]=OneTravel.OneTravelInfo.travelDateFrom.split('T');
-    var header:String=OneTravel.OneTravelInfo.travelDest+','+date[0];
-     dispatch(changeNavText(header));
 
+  console.log(OneTravel.OneTravelInfo.Listofcat);
+  console.log(listContent);
+  console.log(usestatearrey);
+
+  useEffect(() => {
+    var date: String[] = OneTravel.OneTravelInfo.travelDateFrom.split('T');
+    var header: String = OneTravel.OneTravelInfo.travelDest + ',' + date[0];
+    dispatch(changeNavText(header));
   }, [dispatch]);
+  useEffect(() => {
+    
+    (User.Islogin) ? setusestatearrey(OneTravel.OneTravelInfo.Listofcat) : setusestatearrey(listContent);
+  }, [User]);
 
   function clickSignup(e: any) {
     nav('/Login', {
@@ -79,7 +86,7 @@ console.log(listContent);
     listContent.push(newlistcat)
     console.log(listContent)
 
-    //dispatch(UpdateInViwlist(listContent));
+    dispatch(UpdateInViwlist(listContent));
 
     //setusestatearrey(listContent);
     setNewCatgeName("");
@@ -87,20 +94,25 @@ console.log(listContent);
 
   }
 
+  function handelFindout(e: any) {
+    nav('/SummeryPage', {
+      state: state
+    });
+  }
+
 
   return (
     <div className='ViewListPageWorapper'>
+
       <div className="ListContainer">
-        {usestatearrey.map((element, index) => { 
-           // var listofitems: item[]=[...element.listOfItems];
-            console.log(element.listincat); //type of cetogry contain listincat
+        {usestatearrey.map((element, index) => {
           return (
             <CollapsibleCompo key={index} CategoryName={element.CategoryName} listincat={element.listincat} />
           );
         })}
       </div>
 
-      {true ?
+      {User.Islogin ?
         <div className='Addnewcategory' >
           <div className="cllabsediv" onClick={addnewCategoryhandler}>
             <CollapsibleCompo CategoryName={"⊕ Add new Category"} listincat={[]} />
@@ -113,7 +125,8 @@ console.log(listContent);
                 <input type="submit" onClick={pushNewToArraey}></input>
               </form>
             </div> : null}
-
+          <button className='FindOutMoreBtn' onClick={handelFindout}>
+            Find Out More...</button>
         </div> : <div className="notlist">
           <div className='congratMsgt'>
             <h1>Congrats!</h1>

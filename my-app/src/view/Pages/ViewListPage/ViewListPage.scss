@@ -1,5 +1,10 @@
 .ViewListPageWorapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 80px;
+    min-height: 100vh;
+    height: 100%;
 
 
     .ListContainer {
@@ -42,12 +47,23 @@
     .Addnewcategory {
         z-index: 1;
         position: relative;
-
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
         .inputcontaINER {
             display: flex;
             flex-direction: row;
 
+        }
+
+        .FindOutMoreBtn {
+            height: 47.75px;
+            width: 100%;
+            border-radius: 16px;
+            background-color: #FF8074;
+            border: 1px solid #FF8074;
+            border-radius: 16px;
         }
     }
 
