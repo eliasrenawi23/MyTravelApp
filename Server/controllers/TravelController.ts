@@ -169,13 +169,13 @@ exports.getAllTravelsData = async (req, res) => {
 
     try {
         console.log(req.cookies);
-        const { userLogin,publicuser } = req.cookies;
-        var cooki:any;
-        if(!publicuser){
-        cooki=userLogin;
+        const { userLogin, publicuser } = req.cookies;
+        var cooki: any;
+        if (!publicuser) {
+            cooki = userLogin;
         }
-        else{
-        cooki=publicuser;
+        else {
+            cooki = publicuser;
         }
         var decoded = jwt.decode(cooki, process.env.JWT_SECRET);
         const { userId } = decoded;
@@ -183,7 +183,7 @@ exports.getAllTravelsData = async (req, res) => {
         const _user = await User.findOne({ _id: userId });
         console.log(_user);
 
-        const _travelList= await Travel.find({ user: _user}).exec();
+        const _travelList = await Travel.find({ user: _user }).exec();
         console.log(_travelList);
 
         res.send({ ok: true, travelList: _travelList });
