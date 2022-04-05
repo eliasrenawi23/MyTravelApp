@@ -55,6 +55,29 @@ export const loginAsync = createAsyncThunk(
 
   }
 );
+export const loginWithGoogle = createAsyncThunk(
+  'user/loginWithGoogle',
+  async (loginInfo: any, thunkAPI) => {
+  
+    console.log(loginInfo);
+
+    try {
+      const response = await axios.post('http://localhost:3001/users/GoogleLogin', loginInfo, { withCredentials: true })
+      const data: any = response.data
+      console.log("login data  from server 3001");
+      console.log(data);
+      if (!data.ok)
+        return thunkAPI.rejectWithValue("failed");
+      else return data;
+    } catch (error: any) {
+      //console.log(error);
+      //thunkAPI.rejectWithValue("failed");
+      alert(error.response.data);
+      thunkAPI.rejectWithValue(error.response.data)
+    }
+
+  }
+);
 export const SignupAsync = createAsyncThunk(
   'user/Signup',
   async (loginInfo: any, thunkAPI) => {
@@ -144,6 +167,21 @@ export const UserSlice = createSlice({
         state.Islogin = true;
       })
       .addCase(SignupAsync.rejected, (state, action) => {
+        state.status = 'failed';
+        state = initialState;
+      })
+      //============================================
+      .addCase(loginWithGoogle.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+        if(action.payload!=undefined){
+          state.status = 'idle';
+          state.userInfo = action.payload.Users;
+          state.Islogin = true;
+        }
+      })
+      .addCase(loginWithGoogle.rejected, (state, action) => {
         state.status = 'failed';
         state = initialState;
       })

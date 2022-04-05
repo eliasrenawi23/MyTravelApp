@@ -5,7 +5,7 @@ import Link from '@mui/material/Link';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { changeNavText } from '../../../app/reducer/NavTextReducer';
-import { GetUser,loginAsync } from '../../../app/reducer/UserReducer';
+import { GetUser,loginAsync, loginWithGoogle } from '../../../app/reducer/UserReducer';
 import './Login.scss';
 import 'react-cookie';
 
@@ -76,7 +76,7 @@ function Login(props: any) {
     const handleLoginWithgoogle = (googledate: any) => {
 
         console.log(googledate)
-        dispatch(loginAsync({
+        dispatch(loginWithGoogle({
             Email: googledate.profileObj.email,
             Fname: googledate.profileObj.givenName,
             Lname: googledate.profileObj.familyName,
